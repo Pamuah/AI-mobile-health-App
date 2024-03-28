@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HealthEduScreen extends StatefulWidget {
+  static const routeName = '/HealthEdu';
   const HealthEduScreen({super.key});
 
   @override

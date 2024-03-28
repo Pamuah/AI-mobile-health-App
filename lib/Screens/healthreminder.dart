@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HealthReminderScreen extends StatefulWidget {
+  static const routeName = '/HealthReminder';
   const HealthReminderScreen({super.key});
 
   @override

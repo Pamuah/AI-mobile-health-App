@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AiModelScreen extends StatefulWidget {
+  static const routeName = '/AiModel';
   const AiModelScreen({super.key});
 
   @override

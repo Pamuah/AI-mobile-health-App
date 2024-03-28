@@ -1,11 +1,9 @@
-import 'dart:js';
-
 import 'package:ai_mhealth_app/Screens/AiModel.dart';
 import 'package:ai_mhealth_app/Screens/healthEdu.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:flutter/material.dart';
-
+import 'package:ai_mhealth_app/Screens/Doctor.dart';
 import '../Screens/signUp.dart';
 
 
@@ -17,6 +15,7 @@ class App_routes{
       HealthReminderScreen.routeName: (context)=> const HealthReminderScreen(),
       HealthEduScreen.routeName:(context) => const HealthEduScreen(),
       AiModelScreen.routeName:(context) => const AiModelScreen(),
+      DoctorScreen.routeName:(context)=> const DoctorScreen(),
     };
     }
 }

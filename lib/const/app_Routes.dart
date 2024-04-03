@@ -1,4 +1,5 @@
-import 'package:ai_mhealth_app/Screens/AiModel.dart';
+import 'package:ai_mhealth_app/Screens/add_medication.dart';
+import 'package:ai_mhealth_app/Screens/self_checkup.dart';
 import 'package:ai_mhealth_app/Screens/healthEdu.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
@@ -6,16 +7,17 @@ import 'package:flutter/material.dart';
 import 'package:ai_mhealth_app/Screens/Doctor.dart';
 import '../Screens/signUp.dart';
 
-
-class App_routes{
+class App_routes {
   Map<String, WidgetBuilder> getRoutes() {
     return {
       SignUpScreen.routeName: (context) => const SignUpScreen(),
-      LoginScreen.routeName:(context) => const LoginScreen(),
-      HealthReminderScreen.routeName: (context)=> const HealthReminderScreen(),
-      HealthEduScreen.routeName:(context) => const HealthEduScreen(),
-      AiModelScreen.routeName:(context) => const AiModelScreen(),
-      DoctorScreen.routeName:(context)=> const DoctorScreen(),
+      LoginScreen.routeName: (context) => const LoginScreen(),
+      MedicationReminderScreen.routeName: (context) =>
+          const MedicationReminderScreen(),
+      HealthEduScreen.routeName: (context) => const HealthEduScreen(),
+      SelfCheckUpScreen.routeName: (context) => const SelfCheckUpScreen(),
+      DoctorScreen.routeName: (context) => const DoctorScreen(),
+      AddMedicationScreen.routeName: (context) => const AddMedicationScreen(),
     };
-    }
+  }
 }

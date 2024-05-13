@@ -5,9 +5,13 @@ class customTextfield extends StatelessWidget {
   const customTextfield({super.key,
     required this.hintText,
     required this.controller,
-    required this.contentPadding });
+    required this.contentPadding,
+    required this.height,
+    required this.width});
 
 final String hintText;
+final double height;
+final double width;
 final TextEditingController controller;
 final EdgeInsetsGeometry contentPadding;
 
@@ -18,12 +22,14 @@ final EdgeInsetsGeometry contentPadding;
              Padding(
                padding: const EdgeInsets.only(top:25.0),
                child: SizedBox(
-                height: 50, //
-                 width: MediaQuery.of(context).size.width, 
+                height: height, 
+                 width: width, 
                  child: TextField(
                   decoration: InputDecoration(
                     contentPadding: contentPadding,
                     border: OutlineInputBorder(
+                      borderSide: BorderSide(color: color.secondary,
+                      width: 2.0),
                       borderRadius: BorderRadius.circular(25),
                     ),
                     hintText: hintText,hintStyle:

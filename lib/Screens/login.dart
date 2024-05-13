@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
@@ -29,15 +30,19 @@ class _LoginScreenState extends State<LoginScreen> {
                  ),),
               ),
                customTextfield(hintText: 'Email',
+               height: 50,
+               width: MediaQuery.of(context).size.width,
                 controller: Emailcontroller, 
                contentPadding: EdgeInsets.only(top: 5,left: 16.0)),
         
-                  customTextfield(hintText:' Password', 
+                  customTextfield(hintText:' Password',
+                  height: 50,
+               width: MediaQuery.of(context).size.width, 
                   controller: passwordController, 
                   contentPadding: EdgeInsets.only(top: 5,left: 16.0)),
         
               Padding(
-                padding: const EdgeInsets.only(bottom:25.0,top: 25.0),
+                padding: const EdgeInsets.only(bottom:20.0,top: 25.0),
                 child: Container(
                                   height: 50, //
                                   width: MediaQuery.of(context).size.width, 
@@ -61,27 +66,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
               ),
 
-              Align(alignment: Alignment.bottomRight,
+          Align(alignment: Alignment.centerRight,
                 child: TextButton(onPressed: (){},
-                   child:Text("Forgot Password?", style: TextStyle(color:color.onSecondary, fontSize: 17,
-                          fontWeight: FontWeight.w500), ), ),
+                   child:Text("Forgot Password?", style: TextStyle(color:color.onSecondary, fontSize: 16,
+                          fontWeight: FontWeight.w400), ), ),
               ),
-        
 
-            Align(alignment: Alignment.bottomRight,
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right:4.0),
-                    child: Text("Don't have an Account?", style: TextStyle(color:color.secondary, fontSize: 15,
-                            fontWeight: FontWeight.w500), ),
-                  ),
-              
-                  TextButton(onPressed: (){},
-                   child:Text("Sign Up", style: TextStyle(color:color.onSecondary, fontSize: 15,
-                          fontWeight: FontWeight.w500), ), )
-                ],
-              ),
+              GoogleFacebook_btn(imagePath: 'assets/Google.jpg',
+               text: 'Login with Google'),
+
+                Padding(
+                  padding: const EdgeInsets.only(top:20.0),
+                  child: GoogleFacebook_btn(imagePath: 'assets/facebook.jpg',
+                                 text: 'Login with Facebook'),
+                ),
+
+            Row(
+              children: [
+                Text("Don't have an Account?", style: TextStyle(color:color.secondary, fontSize: 16,
+                        fontWeight: FontWeight.w500), ),
+            
+                TextButton(onPressed: (){},
+                 child:Text("Sign Up", style: TextStyle(color:color.onSecondary, fontSize: 16,
+                        fontWeight: FontWeight.w400), ), )
+              ],
             )
             ],
           ),

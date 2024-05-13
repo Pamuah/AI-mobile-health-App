@@ -31,14 +31,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
           
                customTextfield(hintText: 'Name',
+               height: 50,
+               width: MediaQuery.of(context).size.width,
                 controller: NameController, 
                contentPadding: EdgeInsets.only(top: 5,left: 16.0)),
         
                customTextfield(hintText: 'Email',
+               height: 50,
+               width: MediaQuery.of(context).size.width,
                 controller: Emailcontroller, 
                contentPadding: EdgeInsets.only(top: 5,left: 16.0)),
         
-                  customTextfield(hintText:' Password', 
+                  customTextfield(hintText:' Password',
+                  height: 50,
+               width: MediaQuery.of(context).size.width, 
                   controller: passwordController, 
                   contentPadding: EdgeInsets.only(top: 5,left: 16.0)),
         

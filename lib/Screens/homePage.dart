@@ -38,6 +38,9 @@ class _HomePageState extends State<HomePage> {
       ),
       
       appBar: AppBar(centerTitle: true,
+
+                    elevation: 0,
+      backgroundColor: Colors.transparent,
         title:Text('Welcome To Health AI',
                   style:TextStyle(fontSize: 24
                   ,fontWeight: FontWeight.bold, color:color.secondary ),),
@@ -59,46 +62,48 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(20),
                           color:Color.fromARGB(255, 235, 233, 233)
                         ),
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom:8.0),
-                              child: Container(
-                                height:  MediaQuery.of(context).size.height*0.28,
-                                width:  MediaQuery.of(context).size.width,
-                              
-                                decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(20),
-                                                      ),
-                                child: Image.asset('assets/sethoscope 4.jpg',fit: BoxFit.cover,),
+                        child: SingleChildScrollView(
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                          
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom:8.0),
+                                child: Container(
+                                  height:  MediaQuery.of(context).size.height*0.28,
+                                  width:  MediaQuery.of(context).size.width,
+                                
+                                  decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(20),
+                                                        ),
+                                  child: Image.asset('assets/sethoscope 4.jpg',fit: BoxFit.cover,),
+                                ),
                               ),
-                            ),
-                           
-                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text('Check yourself with AI',
-                                                  style:TextStyle(fontSize: 18
-                                                  ,fontWeight: FontWeight.bold, color:color.secondary ),),
-                                
-                                                  Container(padding: EdgeInsets.all(7.0),
-                                                    width: 65,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(),
-                                                      borderRadius: BorderRadius.circular(10.0),
-                                                      color: color.primary
+                             
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Check yourself with AI',
+                                                    style:TextStyle(fontSize: 18
+                                                    ,fontWeight: FontWeight.bold, color:color.secondary ),),
+                                  
+                                                    Container(padding: EdgeInsets.all(7.0),
+                                                      width: 65,
+                                                      height: 40,
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(),
+                                                        borderRadius: BorderRadius.circular(10.0),
+                                                        color: color.primary
+                                                      ),
+                                                      
+                                                      child: Text('Start',
+                                                    style:TextStyle(fontSize: 18
+                                                    ,fontWeight: FontWeight.bold, color:color.secondary ),),
+                                  
                                                     ),
-                                                    
-                                                    child: Text('Start',
-                                                  style:TextStyle(fontSize: 18
-                                                  ,fontWeight: FontWeight.bold, color:color.secondary ),),
+                                ],
+                              )
                                 
-                                                  ),
-                              ],
-                            )
-      
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -119,34 +124,36 @@ class _HomePageState extends State<HomePage> {
                           color: Color.fromARGB(255, 235, 233, 233)
                         ),
 
-                        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 25),
-                              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  shortCut(activity: 'Connect\nwith\nDoctor',
-                                   imageName: 'assets/doctor.png'),
-                              
-                                   shortCut(activity: 'Pills\nReminder',
-                                    imageName: 'assets/alarm.png')
-                                ],
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 25,bottom: 90),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    shortCut(activity: 'Connect\nwith\nDoctor',
+                                     imageName: 'assets/doctor.png'),
+                                
+                                     shortCut(activity: 'Meds\nAlert',
+                                      imageName: 'assets/alarm.png')
+                                  ],
+                                ),
                               ),
-                            ),
-
-                             Padding(
-                               padding: const EdgeInsets.only(left:16.0,right: 16.0,bottom: 25),
-                               child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  shortCut(activity: 'Health\nEducation',
-                                   imageName: 'assets/book.png'),
-                               
-                                   shortCut(activity: 'History', 
-                                   imageName: 'assets/history.png'),
-                                ],
-                                                           ),
-                             )
-                          ],
+                          
+                               Padding(
+                                 padding: const EdgeInsets.only(left:16.0,right: 16.0,bottom: 25),
+                                 child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    shortCut(activity: 'Health\nEducation',
+                                     imageName: 'assets/book.png'),
+                                 
+                                     shortCut(activity: 'History', 
+                                     imageName: 'assets/history.png'),
+                                  ],
+                                     ),
+                               )
+                            ],
+                          ),
                         ),
                       ),
                     )

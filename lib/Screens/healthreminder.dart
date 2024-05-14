@@ -2,7 +2,7 @@ import 'package:ai_mhealth_app/widgets/medication_tile.dart';
 import 'package:flutter/material.dart';
 
 class MedicationReminderScreen extends StatefulWidget {
-  static const routeName = '/HealthReminder';
+  static const routeName = '/health-reminder';
   const MedicationReminderScreen({super.key});
 
   @override
@@ -39,7 +39,9 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
         centerTitle: true,
         toolbarHeight: 80,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),

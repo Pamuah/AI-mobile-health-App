@@ -1,4 +1,6 @@
+import 'package:ai_mhealth_app/Screens/ai_model.dart';
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
+import 'package:ai_mhealth_app/Screens/patientRecords.dart';
 import 'package:ai_mhealth_app/Screens/self_checkup.dart';
 import 'package:ai_mhealth_app/Screens/healthEdu.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
@@ -7,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:ai_mhealth_app/Screens/Doctor.dart';
 import '../Screens/signUp.dart';
 
-class App_routes {
+class AppRoutes {
   Map<String, WidgetBuilder> getRoutes() {
     return {
       SignUpScreen.routeName: (context) => const SignUpScreen(),
@@ -18,6 +20,8 @@ class App_routes {
       SelfCheckUpScreen.routeName: (context) => const SelfCheckUpScreen(),
       DoctorScreen.routeName: (context) => const DoctorScreen(),
       AddMedicationScreen.routeName: (context) => const AddMedicationScreen(),
+      PatientRecords.routeName: (context) => const PatientRecords(),
+      AiModelScreen.routeName: (context) => const AiModelScreen(),
     };
   }
 }

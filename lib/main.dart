@@ -1,17 +1,9 @@
-import 'package:ai_mhealth_app/Screens/AiModel.dart';
-import 'package:ai_mhealth_app/Screens/add_medication.dart';
-import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/homePage.dart';
-import 'package:ai_mhealth_app/Screens/login.dart';
-import 'package:ai_mhealth_app/Screens/patientRecords.dart';
-import 'package:ai_mhealth_app/Screens/signUp.dart';
 import 'package:ai_mhealth_app/const/themeData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:ai_mhealth_app/const/app_Routes.dart';
-
-import 'Screens/self_checkup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,9 +24,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: themeData(),
       debugShowCheckedModeBanner: false,
-      routes: App_routes().getRoutes(),
+      routes: AppRoutes().getRoutes(),
       initialRoute: '/',
-      home: const MedicationReminderScreen(),
+      home: const HomePage(),
     );
   }
 }

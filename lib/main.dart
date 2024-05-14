@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/Screens/add_medication.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/homePage.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: App_routes().getRoutes(),
       initialRoute: '/',
-      home: MedicationReminderScreen(),
+      home: const MedicationReminderScreen(),
     );
   }
 }

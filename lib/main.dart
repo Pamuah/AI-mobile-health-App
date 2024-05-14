@@ -1,7 +1,9 @@
+import 'package:ai_mhealth_app/Screens/AiModel.dart';
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/homePage.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/patientRecords.dart';
 import 'package:ai_mhealth_app/Screens/signUp.dart';
 import 'package:ai_mhealth_app/const/themeData.dart';
 import 'package:flutter/material.dart';

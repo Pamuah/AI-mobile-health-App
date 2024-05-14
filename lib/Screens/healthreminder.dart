@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/widgets/medication_tile.dart';
 import 'package:flutter/material.dart';
 
 class MedicationReminderScreen extends StatefulWidget {
@@ -10,6 +11,21 @@ class MedicationReminderScreen extends StatefulWidget {
 }
 
 class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
+  final medications = const [
+    "Nugel-O",
+    "Panadol",
+    "Gebedol",
+    "Speman",
+    "Dexatrol",
+  ];
+  final progress = const [
+    "Completed",
+    "Completed",
+    "In-progress",
+    "Completed",
+    "In-progress"
+  ];
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -17,7 +33,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Medication \nReminder",
+          "Medication Reminder",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -75,12 +91,12 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               ),
               child: Row(children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome \n To Medication Reminder",
+                      "Welcome \nTo Medication Reminder",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -88,7 +104,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                       ),
                     ),
                     Text(
-                      "3 of 5 completed",
+                      "\n3 of 5 completed",
                       style: TextStyle(
                         fontWeight: FontWeight.w200,
                         fontSize: 12,
@@ -123,60 +139,16 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               thickness: 0.005,
             ),
             Expanded(
-              child: ListView(
+              child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return MedicationTile(
+                      name: medications[index], isDone: progress[index]);
+                },
                 // padding: const EdgeInsets.symmetric(vertical: 8),
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.medication),
-                    title: const Text("Nugel-o"),
-                    tileColor: color.onPrimary,
-                    subtitle: const Text("Completed"),
-                    trailing: const Icon(Icons.arrow_right_outlined),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.medication),
-                    title: const Text("Nugel-o"),
-                    tileColor: color.onPrimary,
-                    subtitle: const Text("In-progress"),
-                    trailing: const Icon(Icons.arrow_right_outlined),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.medication),
-                    title: const Text("Panadol"),
-                    tileColor: color.onPrimary,
-                    subtitle: const Text("Completed"),
-                    trailing: const Icon(Icons.arrow_right_outlined),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.medication),
-                    title: const Text("Gebedol"),
-                    tileColor: color.onPrimary,
-                    subtitle: const Text("Completed"),
-                    trailing: const Icon(Icons.arrow_right_outlined),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.medication),
-                    title: const Text("Speman"),
-                    tileColor: color.onPrimary,
-                    subtitle: const Text("In-progress"),
-                    trailing: const Icon(Icons.arrow_right_outlined),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ],
+                separatorBuilder: (BuildContext context, int index) {
+                  return const Divider();
+                },
+                itemCount: medications.length,
               ),
             ),
           ],

@@ -41,14 +41,15 @@ class _AiModelScreenState extends State<AiModelScreen> {
             color: color.primary,
           ),
           child: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 24,
-                color: color.onPrimary,
-              )),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 24,
+              color: color.onPrimary,
+            ),
+          ),
         ),
       ),
       body: Padding(

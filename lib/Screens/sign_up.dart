@@ -2,7 +2,7 @@ import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
-  static const routeName = '/signUp';
+  static const routeName = '/sign-up';
   const SignUpScreen({super.key});
 
   @override
@@ -63,7 +63,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 50, //
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: color.primary,
                       shape: RoundedRectangleBorder(

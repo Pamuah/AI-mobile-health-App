@@ -3,7 +3,8 @@ import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  static const routeName = '/Login';
+  static const routeName = '/login';
+
   const LoginScreen({super.key});
 
   @override
@@ -47,7 +48,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 50, //
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/home');
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: color.primary,
                       shape: RoundedRectangleBorder(

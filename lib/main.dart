@@ -1,4 +1,5 @@
-import 'package:ai_mhealth_app/Screens/homePage.dart';
+import 'package:ai_mhealth_app/Screens/home.dart';
+import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/const/themeData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +27,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: AppRoutes().getRoutes(),
       initialRoute: '/',
-      home: const HomePage(),
+      home: const SignUpScreen(),
     );
   }
 }

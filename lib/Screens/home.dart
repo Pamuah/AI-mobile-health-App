@@ -1,17 +1,17 @@
-import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/widgets/shortcut_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatefulWidget {
+  static const routeName = '/home';
+
+  const HomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -76,50 +76,55 @@ class _HomePageState extends State<HomePage> {
                           child: Container(
                             height: MediaQuery.of(context).size.height * 0.28,
                             width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Image.asset(
-                              'assets/sethoscope 4.jpg',
-                              fit: BoxFit.cover,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                  side: const BorderSide(width: 0.5)),
+                              image: const DecorationImage(
+                                image: AssetImage('assets/sethoscope 4.jpg'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Check yourself with AI',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: color.secondary),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/ai-model',
-                                );
-                              },
-                              child: Container(
-                                padding: const EdgeInsets.all(7.0),
-                                width: 65,
-                                height: 40,
-                                decoration: BoxDecoration(
-                                    border: Border.all(),
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    color: color.primary),
-                                child: Text(
-                                  'Start',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: color.secondary),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Check yourself with AI',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: color.secondary),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/ai-model',
+                                  );
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(7.0),
+                                  width: 65,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: color.primary),
+                                  child: Text(
+                                    'Start',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: color.secondary),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         )
                       ],
                     ),

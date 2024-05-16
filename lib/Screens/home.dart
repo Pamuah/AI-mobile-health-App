@@ -12,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int index = 1;
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
@@ -19,26 +21,38 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
         child: GNav(
-            //backgroundColor: color.secondary,
-            // activeColor:color.onPrimary ,
-            tabBackgroundColor: color.primary,
-            padding: const EdgeInsets.all(16),
-            gap: 8.0,
-            iconSize: 33,
-            tabs: const [
-              GButton(
-                icon: Icons.home,
-                text: 'Home',
-              ),
-              GButton(
-                icon: Icons.notification_important,
-                text: 'Notification',
-              ),
-              GButton(
-                icon: Icons.settings,
-                text: 'Settings',
-              ),
-            ]),
+          //backgroundColor: color.secondary,
+          // activeColor:color.onPrimary ,
+          tabBackgroundColor: color.primary,
+          padding: const EdgeInsets.all(16),
+          gap: 8.0,
+          iconSize: 33,
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.notification_important,
+              text: 'Notification',
+            ),
+            GButton(
+              icon: Icons.settings,
+              text: 'Settings',
+            ),
+          ],
+          // onTabChange: (index) {
+          //   setState(() {
+          //     index += 1;
+          //   });
+          //   switch (index) {
+          //     case 1:
+          //       return HomeScreen();
+          //       break;
+          //     default:
+          //   }
+          // },
+        ),
       ),
       appBar: AppBar(
         centerTitle: true,
@@ -198,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onTap: () {
                                   Navigator.pushNamed(
                                     context,
-                                    '/patient-records',
+                                    '/patient-history',
                                   );
                                 },
                               ),

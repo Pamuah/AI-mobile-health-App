@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
-class DoctorScreen extends StatefulWidget {
-  static const routeName = '/doctor';
-  const DoctorScreen({super.key});
+class SettingsScreen extends StatefulWidget {
+  static const routeName = '/settings-screen';
+
+  const SettingsScreen({super.key});
 
   @override
-  State<DoctorScreen> createState() => _DoctorScreenState();
+  State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _DoctorScreenState extends State<DoctorScreen> {
+class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          "Appointment",
+          "Settings",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,

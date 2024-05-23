@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/notification_tile.dart';
+
 class NotificationsScreen extends StatefulWidget {
   static const routeName = '/notifications-screen';
 
@@ -27,21 +29,37 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(
-              "Screen Currently Under Construction...",
-              style: TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-            Icon(
-              Icons.streetview_outlined,
-              size: 150,
-              color: Colors.red,
-            ),
+            // Text(
+            //   "No Current Notifications",
+            //   style: TextStyle(
+            //     fontSize: 22,
+            //     fontWeight: FontWeight.bold,
+            //     color: Colors.red,
+            //   ),
+            // ),
+            // Icon(
+            //   Icons.markunread_mailbox_outlined,
+            //   size: 150,
+            //   color: Colors.red,
+            // ),
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) {
+                    return NotificationTile(
+                      leadingIcon:
+                          const Icon(Icons.notifications_active_outlined),
+                      title: "You have a new notification",
+                      subTitle: DateTime.now().toString(),
+                    );
+                  },
+                  separatorBuilder: (context, index) => const Divider(),
+                  itemCount: 10),
+            )
           ],
         ),
       ),

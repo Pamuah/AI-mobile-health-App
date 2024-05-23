@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Navigator.pushNamed(context, "/login");
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: color.primary,
+                      backgroundColor: color.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),

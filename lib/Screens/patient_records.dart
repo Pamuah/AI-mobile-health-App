@@ -263,7 +263,7 @@ class _PatientRecordsState extends State<PatientRecords> {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    primary: color.primary,
+                    backgroundColor: color.primary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),

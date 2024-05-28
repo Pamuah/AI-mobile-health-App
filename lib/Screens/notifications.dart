@@ -14,21 +14,17 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Notifications",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        toolbarHeight: 80,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-        ),
-      ),
+          title: Text(
+            "Notifications",
+            style:
+                TextStyle(fontWeight: FontWeight.bold, color: color.secondary),
+          ),
+          centerTitle: true,
+          leading: const SizedBox()),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

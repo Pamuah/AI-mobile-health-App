@@ -1,6 +1,4 @@
 import 'package:ai_mhealth_app/Screens/login.dart';
-import 'package:ai_mhealth_app/Screens/sign_up.dart';
-// import 'package:device_preview/device_preview.dart';
 import 'package:ai_mhealth_app/const/app_Routes.dart';
 import 'package:ai_mhealth_app/const/themeData.dart';
 import 'package:device_preview/device_preview.dart';

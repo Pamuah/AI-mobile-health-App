@@ -12,20 +12,17 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Settings",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: color.secondary),
         ),
         centerTitle: true,
-        toolbarHeight: 80,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
-        ),
+        elevation: 0,
+        leading: const SizedBox(),
       ),
       body: const SafeArea(
         child: Column(

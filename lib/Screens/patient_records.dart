@@ -257,7 +257,7 @@ class _PatientRecordsState extends State<PatientRecords> {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 25.0),
-              child: Container(
+              child: SizedBox(
                 height: 55, //
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(

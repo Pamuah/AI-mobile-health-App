@@ -20,120 +20,126 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
     return Scaffold(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 30.0, top: 70),
-                child: Text(
-                  'Login',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.w500),
-                ),
-              ),
-              CustomTextField(
-                  hintText: 'Email',
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  controller: emailController,
-                  contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
-              CustomTextField(
-                  hintText: ' Password',
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  controller: passwordController,
-                  contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 20.0, top: 25.0),
-                child: SizedBox(
-                  height: 50, //
-                  width: MediaQuery.of(context).size.width,
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      if (await logIn()) {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Login Successful"),
-                            ),
-                          );
-                          Navigator.pushNamed(context, '/home');
-                        }
-                      } else {
-                        if (context.mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                  "Failed to login. Check email or password again!!"),
-                            ),
-                          );
-                        }
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: color.primary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                    ),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: color.onPrimary,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30.0, top: 70),
                   child: Text(
-                    "Forgot Password?",
+                    'Login',
                     style: TextStyle(
-                        color: color.onSecondary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
+                        fontSize: 26,
+                        fontWeight: FontWeight.w500,
+                        color: color.secondary),
                   ),
                 ),
-              ),
-              const GoogleFacebook_btn(
-                  imagePath: 'assets/Google.jpg', text: 'Login with Google'),
-              const Padding(
-                padding: EdgeInsets.only(top: 20.0),
-                child: GoogleFacebook_btn(
-                    imagePath: 'assets/facebook.jpg',
-                    text: 'Login with Facebook'),
-              ),
-              Row(
-                children: [
-                  Text(
-                    "Don't have an Account?",
-                    style: TextStyle(
-                        color: color.secondary,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500),
+                CustomTextField(
+                    hintText: 'Email',
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    controller: emailController,
+                    contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
+                CustomTextField(
+                    hintText: ' Password',
+                    height: 50,
+                    width: MediaQuery.of(context).size.width,
+                    controller: passwordController,
+                    contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0, top: 25.0),
+                  child: SizedBox(
+                    height: 50, //
+                    width: MediaQuery.of(context).size.width,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        if (await logIn()) {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("Login Successful"),
+                              ),
+                            );
+                            Navigator.pushNamed(context, '/home');
+                          }
+                        } else {
+                          if (context.mounted) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    "Failed to login. Check email or password again!!"),
+                              ),
+                            );
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: color.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                      ),
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: color.onPrimary,
+                        ),
+                      ),
+                    ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/sign-up");
-                    },
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {},
                     child: Text(
-                      "Sign Up",
+                      "Forgot Password?",
                       style: TextStyle(
                           color: color.onSecondary,
                           fontSize: 16,
                           fontWeight: FontWeight.w400),
                     ),
-                  )
-                ],
-              )
-            ],
+                  ),
+                ),
+                const GoogleFacebook_btn(
+                    imagePath: 'assets/Google.jpg', text: 'Login with Google'),
+                const Padding(
+                  padding: EdgeInsets.only(top: 20.0),
+                  child: GoogleFacebook_btn(
+                      imagePath: 'assets/facebook.jpg',
+                      text: 'Login with Facebook'),
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Don't have an Account?",
+                      style: TextStyle(
+                          color: color.secondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/sign-up");
+                      },
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                            color: color.onSecondary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         centerTitle: true,
         elevation: 0,
+        leading: const SizedBox(),
         backgroundColor: Colors.transparent,
         title: Text(
           'Welcome To Health AI',
@@ -76,8 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0, top: 16),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.only(bottom: 15),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: const Color.fromARGB(255, 235, 233, 233)),
@@ -155,8 +155,6 @@ class _HomeScreenState extends State<HomeScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: const Color.fromARGB(255, 235, 233, 233)),

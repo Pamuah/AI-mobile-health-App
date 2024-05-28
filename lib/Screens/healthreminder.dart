@@ -32,12 +32,15 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Medication Reminder",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: color.secondary,
+              fontSize: 20),
         ),
         centerTitle: true,
-        toolbarHeight: 80,
+        toolbarHeight: 100,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -45,7 +48,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
-      backgroundColor: color.background,
+      // backgroundColor: color.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
@@ -84,7 +87,6 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
             ),
             Container(
               padding: const EdgeInsets.all(15),
-              height: 150,
               decoration: ShapeDecoration(
                 color: color.primary,
                 shape: RoundedRectangleBorder(
@@ -98,7 +100,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Welcome \nTo Medication Reminder",
+                      "Welcome \nTo Medication \nReminder",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -108,7 +110,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                     Text(
                       "\n3 of 5 completed",
                       style: TextStyle(
-                        fontWeight: FontWeight.w200,
+                        fontWeight: FontWeight.w400,
                         fontSize: 12,
                         color: color.secondary,
                       ),
@@ -118,7 +120,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                 Text(
                   "👋",
                   style: TextStyle(
-                    fontWeight: FontWeight.w200,
+                    fontWeight: FontWeight.w700,
                     fontSize: 75,
                     color: color.secondary,
                   ),
@@ -129,11 +131,12 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               height: 15,
               thickness: 0.005,
             ),
-            const Text(
+            Text(
               "Daily Review",
               // textAlign: TextAlign.left,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
+                color: color.secondary,
               ),
             ),
             const Divider(

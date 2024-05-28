@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -44,15 +47,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
               Padding(
                 padding: const EdgeInsets.only(bottom: 20.0, top: 25.0),
-                child: Container(
+                child: SizedBox(
                   height: 50, //
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/home');
+                    onPressed: () async {
+                      if (await logIn()) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Login Successful"),
+                            ),
+                          );
+                          Navigator.pushNamed(context, '/home');
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "Failed to login. Check email or password again!!"),
+                            ),
+                          );
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: color.primary,
+                      backgroundColor: color.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -99,7 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontWeight: FontWeight.w500),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/sign-up");
+                    },
                     child: Text(
                       "Sign Up",
                       style: TextStyle(
@@ -115,5 +138,26 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> logIn() async {
+    const String serverEndPoint = "http://192.168.43.14:3000/mhealth-api/users";
+
+    // List<String> interimUsers = [];
+
+    final res = await http.get(
+      Uri.parse("$serverEndPoint/login/${emailController.value.text}"),
+    );
+
+    if (res.statusCode == 200) {
+      final resData = jsonDecode(res.body);
+      final userPassword = resData[0][0]['password'];
+      if (userPassword == passwordController.value.text) {
+        return true;
+      }
+      return false;
+    } else {
+      throw Exception("Failed to login.");
+    }
   }
 }

@@ -14,6 +14,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
     return Scaffold(appBar: AppBar(
       toolbarHeight: 70,
       elevation: 0,
@@ -37,7 +38,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
         ),
-      ),
     
      
       body: Column(

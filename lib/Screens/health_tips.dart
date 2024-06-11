@@ -11,11 +11,13 @@ class HealthEduScreen extends StatefulWidget {
 class _HealthEduScreenState extends State<HealthEduScreen> {
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Daily Tip",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: color.secondary),
         ),
         centerTitle: true,
         toolbarHeight: 80,

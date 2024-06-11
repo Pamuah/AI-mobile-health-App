@@ -34,7 +34,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
-              Spacer(),
+              const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,15 +56,15 @@ class _DoctorScreenState extends State<DoctorScreen> {
                             fontSize: 16,
                           ),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding:
+                              const EdgeInsets.symmetric(horizontal: 16),
                         ),
                       ),
                     ),
                   ),
-                 
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Container(
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Container(
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
@@ -80,7 +80,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
                         ),
                       ),
                     ),
-                ),
+                  ),
                 ],
               ),
             ],

@@ -38,7 +38,7 @@ class ShortCut extends StatelessWidget {
             child: Text(
               activity,
               style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: color.secondary),
             ),

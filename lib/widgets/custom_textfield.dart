@@ -24,6 +24,7 @@ class CustomTextField extends StatelessWidget {
         height: height,
         width: width,
         child: TextField(
+          controller: controller,
           decoration: InputDecoration(
             contentPadding: contentPadding,
             border: OutlineInputBorder(

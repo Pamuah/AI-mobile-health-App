@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/widgets/notification_tile.dart';
 import 'package:flutter/material.dart';
 
 class PatientHistoryScreen extends StatefulWidget {
@@ -10,13 +11,17 @@ class PatientHistoryScreen extends StatefulWidget {
 }
 
 class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
+  List<String> historyHeadings = [""];
+
   @override
   Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Patient History",
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: color.secondary),
         ),
         centerTitle: true,
         toolbarHeight: 80,
@@ -27,21 +32,30 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
         ),
       ),
-      body: const SafeArea(
+      body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              "Screen Currently Under Construction...",
-              style: TextStyle(
-                  fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
-            ),
-            Icon(
-              Icons.streetview_outlined,
-              size: 150,
-              color: Colors.red,
-            ),
+            // Text(
+            //   "Screen Currently Under Construction...",
+            //   style: TextStyle(
+            //       fontSize: 22, fontWeight: FontWeight.bold, color: Colors.red),
+            // ),
+            // Icon(
+            //   Icons.streetview_outlined,
+            //   size: 150,
+            //   color: Colors.red,
+            // ),
+            Expanded(
+              child: ListView.separated(
+                  itemBuilder: (context, index) => NotificationTile(
+                      leadingIcon: const Icon(Icons.history_edu_outlined),
+                      title: "Previous Interaction with A.I...",
+                      subTitle: DateTime.now().toString()),
+                  separatorBuilder: (ctx, idx) => const Divider(),
+                  itemCount: 5),
+            )
           ],
         ),
       ),

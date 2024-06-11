@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/sign-up';
@@ -11,7 +13,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
-  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Email',
                   height: 50,
                   width: MediaQuery.of(context).size.width,
-                  controller: emailcontroller,
+                  controller: emailController,
                   contentPadding: const EdgeInsets.only(top: 5, left: 16.0)),
               CustomTextField(
                   hintText: ' Password',
@@ -59,15 +61,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
-                child: Container(
+                child: SizedBox(
                   height: 50, //
                   width: MediaQuery.of(context).size.width,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "/login");
+                    onPressed: () async {
+                      if (await addUser()) {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("User Successfully Registered"),
+                            ),
+                          );
+                          Navigator.pushNamed(context, "/home");
+                        }
+                      } else {
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text(
+                                  "Failed To Register New User. Please Try Again"),
+                            ),
+                          );
+                        }
+                      }
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: color.primary,
+                      backgroundColor: color.primary,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
@@ -105,7 +125,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     Container(
                       height: 1.0,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      width: MediaQuery.of(context).size.width * 0.35,
                       color: Colors.grey,
                     ),
                   ],
@@ -121,7 +141,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      border: Border.all(color: color.onBackground, width: 1.0),
+                      border: Border.all(color: color.onSurface, width: 1.0),
                     ),
                     child: Center(
                       child: Row(
@@ -153,7 +173,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: color.onBackground, width: 1.0),
+                    border: Border.all(color: color.onSurface, width: 1.0),
                   ),
                   child: Center(
                     child: Row(
@@ -181,5 +201,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  Future<bool> addUser() async {
+    Map<String, String> user = {
+      'name': nameController.value.text.toString(),
+      'email': emailController.value.text,
+      'password': passwordController.value.text,
+    };
+
+    final res = await http.post(
+      Uri.parse("http://192.168.43.14:3000/mhealth-api/users/"),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(user),
+    );
+
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }

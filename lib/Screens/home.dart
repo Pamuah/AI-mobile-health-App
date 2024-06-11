@@ -31,27 +31,29 @@ class _HomeScreenState extends State<HomeScreen> {
           iconSize: 33,
           tabs: [
             GButton(
-                icon: Icons.home,
-                text: 'Home',
-                onPressed: () {
-                  // Navigator.pushNamed(context, '/home');
-                }),
+              icon: Icons.home,
+              iconSize: 30,
+              text: 'Home',
+              style: GnavStyle.oldSchool,
+              textColor: color.secondary,
+            ),
             GButton(
-                icon: Icons.notification_important,
-                text: 'Notification',
-                onPressed: () {
-                  // Navigator.pushNamed(context, '/notifications-screen');
-                }),
+              icon: Icons.notification_important,
+              iconSize: 30,
+              text: 'Notification',
+              textColor: color.secondary,
+            ),
             GButton(
-                icon: Icons.settings,
-                text: 'Settings',
-                onPressed: () {
-                  // Navigator.pushNamed(context, '/settings-screen');
-                }),
+              icon: Icons.settings,
+              iconSize: 30,
+              text: 'Settings',
+              textColor: color.secondary,
+            ),
           ],
           onTabChange: (index) {
             setState(() {
               currentIndex = index;
+              print("$index");
             });
             controller.jumpToPage(index);
           },
@@ -62,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             currentIndex = page;
           });
+          print("$page");
         },
         controller: controller,
         itemBuilder: (context, position) {
@@ -103,7 +106,7 @@ class _MainScreenState extends State<MainScreen> {
         title: Text(
           'Welcome To Health AI',
           style: TextStyle(
-              fontSize: 24,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: color.secondary),
         ),
@@ -151,33 +154,29 @@ class _MainScreenState extends State<MainScreen> {
                                 Text(
                                   'Check yourself with AI',
                                   style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.bold,
                                       color: color.secondary),
                                 ),
-                                InkWell(
-                                  onTap: () {
+                                ElevatedButton(
+                                  onPressed: () {
                                     Navigator.pushNamed(
                                       context,
                                       '/ai-model',
                                     );
                                   },
-                                  child: Container(
-                                    padding: const EdgeInsets.all(7.0),
-                                    width: 65,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        color: color.primary),
-                                    child: Text(
-                                      'Start',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: color.secondary),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: color.primary,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
+                                  ),
+                                  child: Text(
+                                    'Start',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: color.secondary),
                                   ),
                                 ),
                               ],

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      required this.hintText,
-      required this.controller,
-      required this.contentPadding,
-      required this.height,
-      required this.width});
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    required this.controller,
+    required this.contentPadding,
+    required this.height,
+    required this.width,
+    required this.obscure,
+    this.keyboard = TextInputType.name,
+  });
 
   final String hintText;
   final double height;
   final double width;
   final TextEditingController controller;
   final EdgeInsetsGeometry contentPadding;
+  final bool obscure;
+  final TextInputType keyboard;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class CustomTextField extends StatelessWidget {
       child: SizedBox(
         height: height,
         width: width,
-        child: TextField(
+        child: TextFormField(
           controller: controller,
           decoration: InputDecoration(
             contentPadding: contentPadding,
@@ -37,6 +42,8 @@ class CustomTextField extends StatelessWidget {
                 color: color.tertiary,
                 fontWeight: FontWeight.w400),
           ),
+          obscureText: obscure,
+          keyboardType: keyboard,
         ),
       ),
     );

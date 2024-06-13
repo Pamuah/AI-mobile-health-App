@@ -1,11 +1,15 @@
-import 'package:ai_mhealth_app/Screens/home.dart';
-import 'package:ai_mhealth_app/Screens/settings.dart';
+import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/const/app_routes.dart';
 
 import 'package:ai_mhealth_app/const/theme_data.dart';
+import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/medication.provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +29,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: themeData(),
-      debugShowCheckedModeBanner: false,
-      routes: AppRoutes().getRoutes(),
-      initialRoute: '/',
-      home: const SettingsScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserData>(
+          create: (_) => UserData(),
+        ),
+        ChangeNotifierProvider<MedicationData>(
+          create: (_) => MedicationData(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: themeData(),
+        debugShowCheckedModeBanner: true,
+        routes: AppRoutes().getRoutes(),
+        initialRoute: LoginScreen.routeName,
+        home: const LoginScreen(),
+      ),
     );
   }
 }

@@ -1,5 +1,10 @@
+import 'package:ai_mhealth_app/Screens/add_medication.dart';
+import 'package:ai_mhealth_app/providers/medication.provider.dart';
 import 'package:ai_mhealth_app/widgets/medication_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/user.provider.dart';
 
 class MedicationReminderScreen extends StatefulWidget {
   static const routeName = '/health-reminder';
@@ -11,24 +16,12 @@ class MedicationReminderScreen extends StatefulWidget {
 }
 
 class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
-  final medications = const [
-    "Nugel-O",
-    "Panadol",
-    "Gebedol",
-    "Speman",
-    "Dexatrol",
-  ];
-  final progress = const [
-    "Completed",
-    "Completed",
-    "In-progress",
-    "Completed",
-    "In-progress"
-  ];
-
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final String username =
+        Provider.of<UserData>(context, listen: false).username;
+    final provider = Provider.of<MedicationData>(context, listen: false);
 
     return Scaffold(
       appBar: AppBar(
@@ -60,9 +53,9 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               thickness: 0.005,
             ),
             RichText(
-              text: const TextSpan(
+              text: TextSpan(
                   text: "Hello,",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xFF27272A),
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
@@ -70,8 +63,8 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: "\nKataali",
-                      style: TextStyle(
+                      text: "\n$username",
+                      style: const TextStyle(
                         letterSpacing: 5,
                         color: Color(0xFF27272A),
                         fontSize: 20,
@@ -108,7 +101,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                       ),
                     ),
                     Text(
-                      "\n3 of 5 completed",
+                      "\n${provider.completedMedications()} of ${provider.medicationsLength} completed",
                       style: TextStyle(
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
@@ -144,16 +137,25 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               thickness: 0.005,
             ),
             Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return MedicationTile(
-                      name: medications[index], isDone: progress[index]);
+              child: Consumer<MedicationData>(
+                builder: (BuildContext context, MedicationData value,
+                    Widget? child) {
+                  return ListView.separated(
+                      itemBuilder: (context, index) {
+                        return MedicationTile(
+                            name: value.getMedicationByIndex(index).name,
+                            isDone: value.getMedicationByIndex(index).completed
+                                ? "Completed"
+                                : "In-Progress");
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const Divider(
+                          height: 5,
+                          thickness: 0.001,
+                        );
+                      },
+                      itemCount: value.medicationsLength);
                 },
-                // padding: const EdgeInsets.symmetric(vertical: 8),
-                separatorBuilder: (BuildContext context, int index) {
-                  return const Divider();
-                },
-                itemCount: medications.length,
               ),
             ),
           ],
@@ -161,7 +163,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, "/add-medication");
+          Navigator.pushNamed(context, AddMedicationScreen.routeName);
         },
         elevation: 5,
         isExtended: true,

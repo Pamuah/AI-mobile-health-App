@@ -1,3 +1,8 @@
+import 'package:ai_mhealth_app/Screens/ai_model.dart';
+import 'package:ai_mhealth_app/Screens/doctor.dart';
+import 'package:ai_mhealth_app/Screens/health_tips.dart';
+import 'package:ai_mhealth_app/Screens/healthreminder.dart';
+import 'package:ai_mhealth_app/Screens/history.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/Screens/settings.dart';
 import 'package:ai_mhealth_app/widgets/shortcut_widget.dart';
@@ -53,7 +58,6 @@ class _HomeScreenState extends State<HomeScreen> {
           onTabChange: (index) {
             setState(() {
               currentIndex = index;
-              print("$index");
             });
             controller.jumpToPage(index);
           },
@@ -64,7 +68,6 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             currentIndex = page;
           });
-          print("$page");
         },
         controller: controller,
         itemBuilder: (context, position) {
@@ -162,7 +165,7 @@ class _MainScreenState extends State<MainScreen> {
                                   onPressed: () {
                                     Navigator.pushNamed(
                                       context,
-                                      '/ai-model',
+                                      AiModelScreen.routeName,
                                     );
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -215,7 +218,7 @@ class _MainScreenState extends State<MainScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      '/doctor',
+                                      DoctorScreen.routeName,
                                     );
                                   },
                                 ),
@@ -223,8 +226,8 @@ class _MainScreenState extends State<MainScreen> {
                                   activity: 'Meds\nAlert',
                                   imageName: 'assets/alarm.png',
                                   onTap: () {
-                                    Navigator.pushNamed(
-                                        context, '/health-reminder');
+                                    Navigator.pushNamed(context,
+                                        MedicationReminderScreen.routeName);
                                   },
                                 )
                               ],
@@ -242,7 +245,7 @@ class _MainScreenState extends State<MainScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      '/health-education',
+                                      HealthEduScreen.routeName,
                                     );
                                   },
                                 ),
@@ -252,7 +255,7 @@ class _MainScreenState extends State<MainScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      '/patient-history',
+                                      PatientHistoryScreen.routeName,
                                     );
                                   },
                                 ),

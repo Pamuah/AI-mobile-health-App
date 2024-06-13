@@ -1,5 +1,6 @@
 import 'package:ai_mhealth_app/Screens/ai_model.dart';
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
+import 'package:ai_mhealth_app/Screens/email_otp.dart';
 import 'package:ai_mhealth_app/Screens/history.dart';
 import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
@@ -30,6 +31,7 @@ class AppRoutes {
       NotificationsScreen.routeName: (context) => const NotificationsScreen(),
       SettingsScreen.routeName: (context) => const SettingsScreen(),
       PatientHistoryScreen.routeName: (context) => const PatientHistoryScreen(),
+      EmailOtpScreen.routeName: (context) => const EmailOtpScreen(),
     };
   }
 }

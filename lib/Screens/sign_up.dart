@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'package:ai_mhealth_app/Screens/email_otp.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/user_args.dart';
+
 class SignUpScreen extends StatefulWidget {
-  static const routeName = '/sign-up';
+  static const routeName = '/signup';
   const SignUpScreen({super.key});
 
   @override
@@ -18,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
+  final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
 
   @override
   void dispose() {
@@ -30,6 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
@@ -95,25 +100,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: MediaQuery.of(context).size.width,
                       child: ElevatedButton(
                         onPressed: () async {
-                          // if (await addUser()) {
-                          //   if (context.mounted) {
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(
-                          //         content: Text("User Successfully Registered"),
-                          //       ),
-                          //     );
-                          //     Navigator.pushNamed(context, "/login");
-                          //   }
-                          // } else {
-                          //   if (context.mounted) {
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(
-                          //         content: Text(
-                          //             "Failed To Register New User. Please Try Again"),
-                          //       ),
-                          //     );
-                          //   }
-                          // }
                           SystemChannels.textInput
                               .invokeMethod<void>('TextInput.hide');
                           if (nameController.value.text.trim() == "" ||
@@ -140,24 +126,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               setState(() {
                                 isLoading = true;
                               });
-                              if (await addUser()) {
+                              if (await sendOtp()) {
                                 if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      margin: const EdgeInsets.only(bottom: 30),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 25, 10, 25),
-                                      duration: const Duration(
-                                          seconds: 1, milliseconds: 500),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      content: const Text(
-                                          "User Successfully Registered"),
-                                    ),
-                                  );
-                                  Navigator.pushNamed(context, '/login');
+                                  Navigator.pushNamed(
+                                      context, EmailOtpScreen.routeName,
+                                      arguments: UserArgs(
+                                        name: nameController.value.text,
+                                        email: emailController.value.text,
+                                        password: passwordController.value.text,
+                                      ));
                                 }
                               } else {
                                 if (context.mounted) {
@@ -173,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       content: const Text(
-                                          "Failed To Register New User. Please Try Again!!"),
+                                          "Check Connection and Try Again!!"),
                                     ),
                                   );
                                 }
@@ -191,8 +168,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    content: const Text(
-                                        "Failed To Register New User. Please Try Again"),
+                                    content: Text(
+                                        "Check Connection and Try Again $e"),
                                   ),
                                 );
                               }
@@ -313,6 +290,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.pushNamed(context, EmailOtpScreen.routeName,
+                          arguments: UserArgs(
+                            name: nameController.value.text,
+                            email: emailController.value.text,
+                            password: passwordController.value.text,
+                          ));
+                    },
+                    child: Text(
+                      "Test",
+                      style: TextStyle(
+                          color: color.onSecondary,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  )
                 ],
               ),
             ),
@@ -322,21 +316,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Future<bool> addUser() async {
-    Map<String, String> user = {
-      'name': nameController.value.text,
-      'email': emailController.value.text,
-      'password': passwordController.value.text,
-    };
-
+  Future<bool> sendOtp() async {
+    String email = emailController.value.text;
     final res = await http.post(
-      Uri.parse("http://192.168.43.14:3000/mhealth-api/users/"),
+      Uri.parse("$serverEndPoint/send-otp"),
       headers: {
         'Content-Type': 'application/json',
       },
-      body: jsonEncode(user),
+      body: jsonEncode(
+        {"email": email},
+      ),
     );
-
     if (res.statusCode == 200) {
       return true;
     }

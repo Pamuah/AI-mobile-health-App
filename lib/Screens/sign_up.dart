@@ -21,6 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
+  bool showPassword = false;
   final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
 
   @override
@@ -59,6 +60,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                   CustomTextField(
+                    prefixIcon: const Icon(Icons.person_outlined),
+                    suffixIcon: const SizedBox(),
                     hintText: 'Name',
                     height: 50,
                     width: MediaQuery.of(context).size.width,
@@ -67,6 +70,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscure: false,
                   ),
                   CustomTextField(
+                    prefixIcon: const Icon(Icons.email_outlined),
+                    suffixIcon: const SizedBox(),
                     hintText: 'Email',
                     height: 50,
                     width: MediaQuery.of(context).size.width,
@@ -76,12 +81,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     keyboard: TextInputType.emailAddress,
                   ),
                   CustomTextField(
+                    prefixIcon: const Icon(Icons.lock_outlined),
+                    suffixIcon: InkWell(
+                      onTap: () {
+                        setState(
+                          () {
+                            showPassword = !showPassword;
+                          },
+                        );
+                      },
+                      child: showPassword
+                          ? const Icon(Icons.visibility_outlined)
+                          : const Icon(Icons.visibility_off_outlined),
+                    ),
                     hintText: ' Password',
                     height: 50,
                     width: MediaQuery.of(context).size.width,
                     controller: passwordController,
                     contentPadding: const EdgeInsets.only(top: 5, left: 16.0),
-                    obscure: true,
+                    obscure: showPassword ? false : true,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),

@@ -1,23 +1,22 @@
 import 'dart:convert';
 
-import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/models/user_args.dart';
 import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
+import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
-class EmailOtpScreen extends StatefulWidget {
-  static const routeName = '/otp';
+class ResetEmailOTPScreen extends StatefulWidget {
+  static const routeName = "/reset-otp";
 
-  const EmailOtpScreen({super.key});
+  const ResetEmailOTPScreen({super.key});
 
   @override
-  State<EmailOtpScreen> createState() => _EmailOtpScreenState();
+  State<ResetEmailOTPScreen> createState() => _ResetEmailOTPScreenState();
 }
 
-class _EmailOtpScreenState extends State<EmailOtpScreen> {
+class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
@@ -37,10 +36,11 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final args = ModalRoute.of(context)!.settings.arguments as UserArgs;
-    final String name = args.name;
-    final String email = args.email;
-    final String password = args.password;
+    // final args = ModalRoute.of(context)!.settings.arguments as UserArgs;
+    // final String name = args.name;
+    // final String email = args.email;
+    // final String password = args.password;
+    String email = "Kat@gmail.com";
 
     return GestureDetector(
       onTap: () {
@@ -55,7 +55,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
             elevation: 0,
             backgroundColor: color.primary,
             title: Text(
-              "Account Verification",
+              "Email Verification",
               style: TextStyle(
                   color: color.onPrimary, fontWeight: FontWeight.w700),
             ),
@@ -89,6 +89,15 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                       height: 60,
                       thickness: 0.005,
                     ),
+                    Image.asset(
+                      'assets/pin.png',
+                      height: 150,
+                      width: 150,
+                    ),
+                    const Divider(
+                      height: 30,
+                      thickness: 0.001,
+                    ),
                     RichText(
                       text: TextSpan(
                         text: "Verification code sent to $email",
@@ -101,7 +110,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                         children: [
                           TextSpan(
                             text:
-                                "\n\n\nPlease check the inbox or spam folder and enter the code that was sent below to complete Registration",
+                                "\n\n\nPlease check the inbox or spam folder and enter the code that was sent below to Reset Password",
                             style: TextStyle(
                               letterSpacing: 2,
                               color: color.secondary,
@@ -112,6 +121,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const Divider(
                       height: 30,
@@ -177,69 +187,6 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                             });
 
                             if (await verifyOtp(code)) {
-                              try {
-                                if (await addUser(name, email, password)) {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 30),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 25, 10, 25),
-                                        duration: const Duration(
-                                            seconds: 1, milliseconds: 500),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        content: const Text(
-                                            "User Successfully Registered"),
-                                      ),
-                                    );
-                                    Navigator.pushNamed(
-                                        context, LoginScreen.routeName);
-                                  }
-                                } else {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 30),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 25, 10, 25),
-                                        duration: const Duration(
-                                            seconds: 1, milliseconds: 500),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        content: const Text(
-                                            "Failed to Register User"),
-                                      ),
-                                    );
-                                  }
-                                }
-                              } catch (e) {
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      margin: const EdgeInsets.only(bottom: 30),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 25, 10, 25),
-                                      duration: const Duration(
-                                          seconds: 1, milliseconds: 500),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      content:
-                                          Text("Failed to Register User $e"),
-                                    ),
-                                  );
-                                }
-                              }
                             } else {
                               if (context.mounted) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -325,26 +272,5 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
     } else {
       throw Exception("Failed to login.");
     }
-  }
-
-  // Register User
-  Future<bool> addUser(name, email, password) async {
-    Map<String, String> user = {
-      'name': name,
-      'email': email,
-      'password': password,
-    };
-
-    final res = await http.post(
-      Uri.parse("$serverEndPoint/register"),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(user),
-    );
-    if (res.statusCode == 200) {
-      return true;
-    }
-    return false;
   }
 }

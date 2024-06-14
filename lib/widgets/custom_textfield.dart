@@ -10,6 +10,8 @@ class CustomTextField extends StatelessWidget {
     required this.width,
     required this.obscure,
     this.keyboard = TextInputType.name,
+    required this.prefixIcon,
+    required this.suffixIcon,
   });
 
   final String hintText;
@@ -19,6 +21,8 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsetsGeometry contentPadding;
   final bool obscure;
   final TextInputType keyboard;
+  final Widget prefixIcon;
+  final Widget suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,8 @@ class CustomTextField extends StatelessWidget {
         child: TextFormField(
           controller: controller,
           decoration: InputDecoration(
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
             contentPadding: contentPadding,
             border: OutlineInputBorder(
               borderSide: BorderSide(color: color.secondary, width: 2.0),

@@ -5,6 +5,7 @@ import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/history.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/Screens/settings.dart';
+import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:ai_mhealth_app/widgets/shortcut_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -257,6 +258,16 @@ class _MainScreenState extends State<MainScreen> {
                                       context,
                                       PatientHistoryScreen.routeName,
                                     );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => SuccessScreen(
+                                    //       message:
+                                    //           "Password was Reset Successfully. Proceed To Login",
+                                    //       navigateTo: () {},
+                                    //     ),
+                                    //   ),
+                                    // );
                                   },
                                 ),
                               ],

@@ -20,19 +20,28 @@ class OtpContainer extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           TextFormField(
-              controller: controller,
-              textAlign: TextAlign.center,
-              keyboardType: TextInputType.number,
-              style: TextStyle(
+            maxLength: 1,
+            textInputAction: TextInputAction.next,
+            controller: controller,
+            textAlign: TextAlign.center,
+            keyboardType: TextInputType.number,
+            style: TextStyle(
+              fontSize: 30,
+              color: color.secondary,
+            ),
+            decoration: const InputDecoration(
+              hintText: "0",
+              hintStyle: TextStyle(
                 fontSize: 30,
-                color: color.secondary,
               ),
-              decoration: const InputDecoration(
-                  hintText: "0",
-                  hintStyle: TextStyle(
-                    fontSize: 30,
-                  ),
-                  border: InputBorder.none)),
+              border: InputBorder.none,
+            ),
+            onChanged: (value) {
+              if (value.isNotEmpty) {
+                FocusScope.of(context).nextFocus();
+              }
+            },
+          ),
         ],
       ),
     );

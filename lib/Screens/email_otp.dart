@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
+import '../widgets/custom_snackbar.dart';
+
 class EmailOtpScreen extends StatefulWidget {
   static const routeName = '/otp';
 
@@ -112,6 +114,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                           ),
                         ],
                       ),
+                      textAlign: TextAlign.center,
                     ),
                     const Divider(
                       height: 30,
@@ -166,6 +169,8 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: () async {
+                          SystemChannels.textInput
+                              .invokeMethod<void>('TextInput.hide');
                           try {
                             final String code = firstController.value.text +
                                 secondController.value.text +
@@ -180,101 +185,43 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
                               try {
                                 if (await addUser(name, email, password)) {
                                   if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 30),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 25, 10, 25),
-                                        duration: const Duration(
-                                            seconds: 1, milliseconds: 500),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        content: const Text(
-                                            "User Successfully Registered"),
-                                      ),
-                                    );
+                                    CustomSnackbar(
+                                            message: "Registration Successful",
+                                            context: context)
+                                        .show();
                                     Navigator.pushNamed(
                                         context, LoginScreen.routeName);
                                   }
                                 } else {
                                   if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 30),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 25, 10, 25),
-                                        duration: const Duration(
-                                            seconds: 1, milliseconds: 500),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        content: const Text(
-                                            "Failed to Register User"),
-                                      ),
-                                    );
+                                    CustomSnackbar(
+                                      message: "User Registration Failed",
+                                      context: context,
+                                    ).show();
                                   }
                                 }
                               } catch (e) {
                                 if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      margin: const EdgeInsets.only(bottom: 30),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 25, 10, 25),
-                                      duration: const Duration(
-                                          seconds: 1, milliseconds: 500),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      content:
-                                          Text("Failed to Register User $e"),
-                                    ),
-                                  );
+                                  CustomSnackbar(
+                                    message: "User Registration Failed $e",
+                                    context: context,
+                                  ).show();
                                 }
                               }
                             } else {
                               if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    margin: const EdgeInsets.only(bottom: 30),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 25, 10, 25),
-                                    duration: const Duration(
-                                        seconds: 1, milliseconds: 500),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    content: const Text(
-                                        "You Entered an incorrect code"),
-                                  ),
-                                );
+                                CustomSnackbar(
+                                  message: "Incorrect Code. Try Again!!",
+                                  context: context,
+                                ).show();
                               }
                             }
                           } catch (e) {
                             if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  margin: const EdgeInsets.only(bottom: 30),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 25, 10, 25),
-                                  duration: const Duration(
-                                      seconds: 100, milliseconds: 500),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  content: Text("Failed to Verify User $e"),
-                                ),
-                              );
+                              CustomSnackbar(
+                                message: "User verification Failed $e",
+                                context: context,
+                              ).show();
                             }
                           }
                           setState(() {

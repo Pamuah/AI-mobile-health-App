@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/user_args.dart';
+import '../widgets/custom_snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -106,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Text(
                       'The password should be at least 6 characters long',
                       style: TextStyle(
-                          color: color.tertiary,
+                          color: color.onTertiary,
                           fontWeight: FontWeight.w400,
                           fontSize: 15),
                     ),
@@ -123,22 +124,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (nameController.value.text.trim() == "" ||
                               emailController.value.text.trim() == "" ||
                               passwordController.value.text.trim() == "") {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: Colors.red,
-                                margin: const EdgeInsets.only(bottom: 30),
-                                padding:
-                                    const EdgeInsets.fromLTRB(10, 25, 10, 25),
-                                duration: const Duration(
-                                    seconds: 1, milliseconds: 500),
-                                behavior: SnackBarBehavior.floating,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                content:
-                                    const Text("Make sure no field is empty!!"),
-                              ),
-                            );
+                            CustomSnackbar(
+                              message: "Fill out all Fields",
+                              context: context,
+                              color: Colors.red.shade200,
+                            ).show();
                           } else {
                             try {
                               setState(() {
@@ -156,40 +146,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 }
                               } else {
                                 if (context.mounted) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      margin: const EdgeInsets.only(bottom: 30),
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 25, 10, 25),
-                                      duration: const Duration(
-                                          seconds: 1, milliseconds: 500),
-                                      behavior: SnackBarBehavior.floating,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      content: const Text(
-                                          "Check Connection and Try Again!!"),
-                                    ),
-                                  );
+                                  CustomSnackbar(
+                                    message: "Check Connection and Try Again!!",
+                                    context: context,
+                                  ).show();
                                 }
                               }
                             } catch (e) {
                               if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    margin: const EdgeInsets.only(bottom: 30),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 25, 10, 25),
-                                    duration: const Duration(
-                                        seconds: 1, milliseconds: 500),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    content: Text(
-                                        "Check Connection and Try Again $e"),
-                                  ),
-                                );
+                                CustomSnackbar(
+                                  message: "Check Connection and Try Again $e",
+                                  context: context,
+                                ).show();
                               }
                             }
                             setState(() {
@@ -308,23 +276,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      Navigator.pushNamed(context, EmailOtpScreen.routeName,
-                          arguments: UserArgs(
-                            name: nameController.value.text,
-                            email: emailController.value.text,
-                            password: passwordController.value.text,
-                          ));
-                    },
-                    child: Text(
-                      "Test",
-                      style: TextStyle(
-                          color: color.onSecondary,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  )
                 ],
               ),
             ),

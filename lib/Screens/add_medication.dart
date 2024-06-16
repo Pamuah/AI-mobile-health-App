@@ -1,3 +1,5 @@
+import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
+import 'package:ai_mhealth_app/widgets/medication_time_card.dart';
 import 'package:flutter/material.dart';
 
 class AddMedicationScreen extends StatefulWidget {
@@ -15,20 +17,30 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
-      bottomNavigationBar: SizedBox(
-        height: 75,
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero)),
-          child: Text(
-            "Done",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-              color: color.secondary,
+      appBar: AppBar(
+        toolbarHeight: 70,
+        elevation: 0,
+        backgroundColor: color.primary,
+        title: Text(
+          "Add Medication",
+          style: TextStyle(color: color.onPrimary, fontWeight: FontWeight.w700),
+        ),
+        centerTitle: true,
+        leading: Container(
+          height: 55,
+          width: 60,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: color.primary,
+          ),
+          child: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 24,
+              color: color.onPrimary,
             ),
           ),
         ),
@@ -36,28 +48,10 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                ),
-                const Divider(
-                  height: 12,
-                  thickness: 0.005,
-                ),
-                Text(
-                  "Add Medication",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    color: color.secondary,
-                  ),
-                ),
                 const Divider(
                   height: 15,
                   thickness: 0.005,
@@ -95,159 +89,54 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                      },
-                      child: Column(
+                    MedicationTimeCard(
+                      text: "Morning",
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              color: color.primary,
-                            ),
-                            child: Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Positioned(
-                                  left: 0,
-                                  top: 0,
-                                  child: Icon(
-                                    Icons.sunny,
-                                    color: color.secondary,
-                                    size: 30,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.cloud,
-                                  color: color.secondary,
-                                  size: 40,
-                                )
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "Morning",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: color.secondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              color: color.primary,
-                            ),
+                          Positioned(
+                            left: 0,
+                            top: 0,
                             child: Icon(
                               Icons.sunny,
                               color: color.secondary,
-                              size: 40,
+                              size: 30,
                             ),
                           ),
-                          Text(
-                            "Afternoon",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: color.secondary,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              color: color.primary,
-                            ),
-                            child: Icon(
-                              Icons.mode_night_outlined,
-                              color: color.secondary,
-                              size: 40,
-                            ),
-                          ),
-                          Text(
-                            "Evening",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: color.secondary,
-                            ),
+                          Icon(
+                            Icons.cloud,
+                            color: color.secondary,
+                            size: 40,
                           )
                         ],
                       ),
                     ),
+                    MedicationTimeCard(
+                      text: "Afternoon",
+                      child: Icon(
+                        Icons.sunny,
+                        color: color.secondary,
+                        size: 40,
+                      ),
+                    ),
+                    MedicationTimeCard(
+                      text: "Evening",
+                      child: Icon(
+                        Icons.mode_night_outlined,
+                        color: color.secondary,
+                        size: 40,
+                      ),
+                    ),
                   ],
                 ),
-                // const Divider(
-                //   height: 20,
-                //   thickness: 0.005,
-                // ),
-                // Text(
-                //   "Set Notification Time ",
-                //   style: TextStyle(
-                //     fontWeight: FontWeight.w500,
-                //     fontSize: 20,
-                //     color: color.secondary,
-                //   ),
-                // ),
-                // const Divider(
-                //   height: 5,
-                //   thickness: 0.005,
-                // ),
-                // IconButton(
-                //   onPressed: () {
-                //     showTimePicker(
-                //       context: context,
-                //       initialTime: TimeOfDay.now(),
-                //     );
-                //   },
-                //   icon: const Icon(Icons.calendar_month_outlined),
-                // ),
-                // const Divider(
-                //   height: 150,
-                //   thickness: 0.005,
-                // ),
+                const Divider(
+                  height: 30,
+                  thickness: 0.005,
+                ),
+                CustomElevatedButton(
+                  text: 'Done',
+                  onPressed: () {},
+                ),
               ],
             ),
           ),

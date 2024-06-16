@@ -46,7 +46,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Divider(
               height: 15,
@@ -143,10 +143,13 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   return ListView.separated(
                       itemBuilder: (context, index) {
                         return MedicationTile(
-                            name: value.getMedicationByIndex(index).name,
-                            isDone: value.getMedicationByIndex(index).completed
-                                ? "Completed"
-                                : "In-Progress");
+                          name: value.getMedicationByIndex(index).name,
+                          // isDone: value.getMedicationByIndex(index).completed
+                          //     ? "Completed"
+                          //     : "In-Progress",
+                          isDone:
+                              "${value.getMedicationByIndex(index).morining}",
+                        );
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return const Divider(

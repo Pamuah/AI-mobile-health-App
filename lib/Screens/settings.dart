@@ -1,3 +1,5 @@
+import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/widgets/setting_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -102,7 +104,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 itemBuilder: (context, index) => SettingsTile(
                       icon: icons[index],
                       name: titles[index],
-                      onTap: () {},
+                      onTap: () {
+                        switch (index) {
+                          case 1:
+                            Navigator.pushNamed(
+                                context, NotificationsScreen.routeName);
+                            break;
+                          case 4:
+                            Navigator.pushNamed(context, LoginScreen.routeName);
+                          default:
+                        }
+                      },
                     ),
                 separatorBuilder: (context, index) => const Divider(
                       height: 5,

@@ -1,11 +1,16 @@
 import 'dart:convert';
 
+import 'package:ai_mhealth_app/Screens/reset_password.dart';
+import 'package:ai_mhealth_app/models/email_args.dart';
 import 'package:ai_mhealth_app/models/user_args.dart';
 import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+
+import '../widgets/custom_snackbar.dart';
 
 class ResetEmailOTPScreen extends StatefulWidget {
   static const routeName = "/reset-otp";
@@ -22,7 +27,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
+  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
 
   @override
   void dispose() {
@@ -36,11 +41,9 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    // final args = ModalRoute.of(context)!.settings.arguments as UserArgs;
-    // final String name = args.name;
-    // final String email = args.email;
-    // final String password = args.password;
-    String email = "Kat@gmail.com";
+    final args = ModalRoute.of(context)!.settings.arguments as EmailArgs;
+    // String email = "Kat@gmail.com";
+    String email = args.email;
 
     return GestureDetector(
       onTap: () {
@@ -82,27 +85,24 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
                 child: Column(
                   children: [
-                    const Divider(
-                      height: 60,
-                      thickness: 0.005,
-                    ),
                     Image.asset(
                       'assets/pin.png',
                       height: 150,
                       width: 150,
                     ),
                     const Divider(
-                      height: 30,
+                      height: 20,
                       thickness: 0.001,
                     ),
                     RichText(
                       text: TextSpan(
                         text: "Verification code sent to $email",
                         style: TextStyle(
-                          color: color.secondary,
+                          color: color.primary,
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           height: 0,
@@ -110,7 +110,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
                         children: [
                           TextSpan(
                             text:
-                                "\n\n\nPlease check the inbox or spam folder and enter the code that was sent below to Reset Password",
+                                "\n\nPlease check the inbox or spam folder and enter the code that was sent below to Reset Password",
                             style: TextStyle(
                               letterSpacing: 2,
                               color: color.secondary,
@@ -158,6 +158,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
                         children: [
                           TextSpan(
                             text: "Resend",
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                             style: TextStyle(
                               color: color.primary,
                               fontSize: 18,
@@ -187,41 +188,27 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
                             });
 
                             if (await verifyOtp(code)) {
+                              if (context.mounted) {
+                                Navigator.pushNamed(
+                                  context,
+                                  ResetPasswordScreen.routeName,
+                                  arguments: EmailArgs(email: email),
+                                );
+                              }
                             } else {
                               if (context.mounted) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    margin: const EdgeInsets.only(bottom: 30),
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 25, 10, 25),
-                                    duration: const Duration(
-                                        seconds: 1, milliseconds: 500),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    content: const Text(
-                                        "You Entered an incorrect code"),
-                                  ),
-                                );
+                                CustomSnackbar(
+                                        message: "Incorrect Code. Try Again!!",
+                                        context: context)
+                                    .show();
                               }
                             }
                           } catch (e) {
                             if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  margin: const EdgeInsets.only(bottom: 30),
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10, 25, 10, 25),
-                                  duration: const Duration(
-                                      seconds: 100, milliseconds: 500),
-                                  behavior: SnackBarBehavior.floating,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  content: Text("Failed to Verify User $e"),
-                                ),
-                              );
+                              CustomSnackbar(
+                                message: "Failed to Verify User $e",
+                                context: context,
+                              ).show();
                             }
                           }
                           setState(() {
@@ -238,7 +225,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
                               fontWeight: FontWeight.w700),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -268,9 +255,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
       if (verified == "true") {
         return true;
       }
-      return false;
-    } else {
-      throw Exception("Failed to login.");
     }
+    return false;
   }
 }

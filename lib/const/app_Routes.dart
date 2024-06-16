@@ -37,7 +37,7 @@ class AppRoutes {
       EmailOtpScreen.routeName: (context) => const EmailOtpScreen(),
       ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
       ResetEmailOTPScreen.routeName: (context) => const ResetEmailOTPScreen(),
-      ResetPasswordScreen.routName: (context) => const ResetPasswordScreen()
+      ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen()
     };
   }
 }

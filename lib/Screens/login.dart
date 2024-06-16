@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'package:ai_mhealth_app/Screens/forgot_password.dart';
 import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/models/user.dart';
 import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
+import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
+import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: emailController,
                         contentPadding:
                             const EdgeInsets.only(top: 5, left: 16.0),
-                        obscure: true,
+                        obscure: false,
                         keyboard: TextInputType.emailAddress,
                       ),
                       CustomTextField(
@@ -101,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20.0, top: 25.0),
                         child: SizedBox(
-                          height: 50, //
+                          height: 50,
                           width: MediaQuery.of(context).size.width,
                           child: ElevatedButton(
                             onPressed: () async {
@@ -109,22 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   .invokeMethod<void>('TextInput.hide');
                               if (emailController.value.text.trim() == "" ||
                                   passwordController.value.text.trim() == "") {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    backgroundColor: Colors.red,
-                                    padding: const EdgeInsets.fromLTRB(
-                                        10, 25, 10, 25),
-                                    duration: const Duration(
-                                        seconds: 1, milliseconds: 500),
-                                    margin: const EdgeInsets.only(bottom: 20),
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    content: const Text(
-                                        "Email or Password should not be empty"),
-                                  ),
-                                );
+                                CustomSnackbar(
+                                        message:
+                                            "Email or Password should not be Empty",
+                                        context: context)
+                                    .show();
                               } else {
                                 try {
                                   setState(() {
@@ -132,71 +124,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                   if (await logIn()) {
                                     if (context.mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          margin:
-                                              const EdgeInsets.only(bottom: 30),
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 25, 10, 25),
-                                          duration: const Duration(
-                                              seconds: 1, milliseconds: 500),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            side: BorderSide(
-                                              color: color.onPrimary,
-                                              width: 1,
-                                            ),
-                                          ),
-                                          content:
-                                              const Text("Login Successful"),
-                                        ),
-                                      );
+                                      CustomSnackbar(
+                                              message: "Login Successful",
+                                              context: context)
+                                          .show();
                                       Navigator.pushNamed(context, '/home');
                                     }
                                   } else {
                                     if (context.mounted) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          margin:
-                                              const EdgeInsets.only(bottom: 30),
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10, 25, 10, 25),
-                                          duration: const Duration(
-                                              seconds: 1, milliseconds: 500),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          content: const Text(
-                                              "Failed to login. Wrong Passsword. Try Again!! "),
-                                        ),
-                                      );
+                                      CustomSnackbar(
+                                              message:
+                                                  "Wrong Password. Try Again!!",
+                                              context: context)
+                                          .show();
                                     }
                                   }
                                 } catch (e) {
                                   if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 30),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 25, 10, 25),
-                                        duration: const Duration(
-                                            seconds: 1, milliseconds: 500),
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        content: const Text(
-                                            "Failed to login. Please enter a correct email!!"),
-                                      ),
-                                    );
+                                    CustomSnackbar(
+                                            message:
+                                                "Enter a registered Email.",
+                                            context: context)
+                                        .show();
                                   }
                                 }
                                 setState(() {
@@ -224,7 +173,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, ForgotPasswordScreen.routeName);
+                          },
                           child: Text(
                             "Forgot Password?",
                             style: TextStyle(

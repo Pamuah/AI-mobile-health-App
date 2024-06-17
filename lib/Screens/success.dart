@@ -16,7 +16,7 @@ class SuccessScreen extends StatelessWidget {
     return Container(
       color: color.onPrimary,
       child: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 45),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -54,7 +54,7 @@ class SuccessScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const Divider(
-              height: 150,
+              height: 100,
               thickness: 0.001,
             ),
             CustomElevatedButton(

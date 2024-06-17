@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
+import '../models/api.dart';
 import '../widgets/custom_snackbar.dart';
 
 class EmailOtpScreen extends StatefulWidget {
@@ -25,8 +26,7 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
-
+  final String serverEndPoint = Api.userEndpoint;
   @override
   void dispose() {
     firstController.dispose();

@@ -20,7 +20,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final String username =
-        Provider.of<UserData>(context, listen: false).username;
+        Provider.of<UserData>(context, listen: false).userName;
     final provider = Provider.of<MedicationData>(context, listen: false);
 
     return Scaffold(

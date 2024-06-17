@@ -11,7 +11,8 @@ class UserData extends ChangeNotifier {
     notifyListeners();
   }
 
-  String get username => currentUser.name;
-  int get userid => currentUser.id;
-  String get useremail => currentUser.email;
+  String get userName => currentUser.name;
+  int get userId => currentUser.id;
+  String get userEmail => currentUser.email;
+  String get userPassword => currentUser.password;
 }

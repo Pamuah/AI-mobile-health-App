@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/api.dart';
 import '../models/user_args.dart';
 import '../widgets/custom_snackbar.dart';
 
@@ -23,7 +24,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
   bool showPassword = false;
-  final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
+  final String serverEndPoint = Api.userEndpoint;
 
   @override
   void dispose() {

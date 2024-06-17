@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:ai_mhealth_app/Screens/email_otp.dart';
-import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/api.dart';
 import '../models/email_args.dart';
 import 'reset_email_otp.dart';
 
@@ -23,7 +22,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final TextEditingController controller = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
+  final String serverEndPoint = Api.userEndpoint;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   horizontal: 20.0,
                 ),
                 child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Divider(
@@ -201,23 +201,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                       ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          ResetEmailOTPScreen.routeName,
-                          arguments:
-                              EmailArgs(email: controller.value.text.trim()),
-                        );
-                      },
-                      child: Text(
-                        "Test",
-                        style: TextStyle(
-                            color: color.onSecondary,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(
+                    //       context,
+                    //       ResetEmailOTPScreen.routeName,
+                    //       arguments:
+                    //           EmailArgs(email: controller.value.text.trim()),
+                    //     );
+                    //   },
+                    //   child: Text(
+                    //     "Test",
+                    //     style: TextStyle(
+                    //         color: color.onSecondary,
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w400),
+                    //   ),
+                    // ),
                     // TextButton(
                     //   onPressed: () {
                     //     Navigator.pushNamed(context, LoginScreen.routeName);

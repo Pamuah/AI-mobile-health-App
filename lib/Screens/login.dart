@@ -6,12 +6,13 @@ import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
 import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
-import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+
+import '../models/api.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/login';
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
   bool showPassword = false;
-  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
+  final String serverEndPoint = Api.userEndpoint;
 
   @override
   void dispose() {
@@ -39,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final provider = Provider.of<UserData>(context, listen: false);
+    // final provider = Provider.of<UserData>(context, listen: false);
 
     return PopScope(
       canPop: false,

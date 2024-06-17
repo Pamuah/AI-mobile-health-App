@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/Screens/account_info.dart';
 import 'package:ai_mhealth_app/Screens/ai_model.dart';
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
 import 'package:ai_mhealth_app/Screens/email_otp.dart';
@@ -5,7 +6,9 @@ import 'package:ai_mhealth_app/Screens/forgot_password.dart';
 import 'package:ai_mhealth_app/Screens/history.dart';
 import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
+import 'package:ai_mhealth_app/Screens/password_verification.dart';
 import 'package:ai_mhealth_app/Screens/patient_records.dart';
+import 'package:ai_mhealth_app/Screens/privacy.dart';
 import 'package:ai_mhealth_app/Screens/reset_email_otp.dart';
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/Screens/self_checkup.dart';
@@ -37,7 +40,11 @@ class AppRoutes {
       EmailOtpScreen.routeName: (context) => const EmailOtpScreen(),
       ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
       ResetEmailOTPScreen.routeName: (context) => const ResetEmailOTPScreen(),
-      ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen()
+      ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+      AccountInfoScreen.routeName: (context) => const AccountInfoScreen(),
+      PrivacyScreen.routeName: (context) => const PrivacyScreen(),
+      PasswordVerificationScreen.routeName: (context) =>
+          const PasswordVerificationScreen(),
     };
   }
 }

@@ -1,10 +1,13 @@
+import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
+import 'package:ai_mhealth_app/Screens/privacy.dart';
 import 'package:ai_mhealth_app/widgets/setting_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.provider.dart';
+import 'account_info.dart';
 
 class SettingsScreen extends StatefulWidget {
   static const routeName = '/settings-screen';
@@ -20,7 +23,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final String useremail =
-        Provider.of<UserData>(context, listen: false).useremail;
+        Provider.of<UserData>(context, listen: false).userEmail;
     final List<String> titles = [
       "Account",
       "Notification",
@@ -106,10 +109,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       name: titles[index],
                       onTap: () {
                         switch (index) {
+                          case 0:
+                            Navigator.pushNamed(
+                                context, AccountInfoScreen.routeName);
                           case 1:
                             Navigator.pushNamed(
                                 context, NotificationsScreen.routeName);
                             break;
+                          case 2:
+                            Navigator.pushNamed(
+                                context, PrivacyScreen.routeName);
                           case 4:
                             Navigator.pushNamed(context, LoginScreen.routeName);
                           default:

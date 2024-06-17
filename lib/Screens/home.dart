@@ -5,7 +5,6 @@ import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/history.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/Screens/settings.dart';
-import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:ai_mhealth_app/widgets/shortcut_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -21,69 +20,83 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int currentIndex = 0;
+  int tabIndex = 0;
+  int pageIndex = 0;
   PageController controller = PageController();
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-        child: GNav(
-          tabBackgroundColor: color.primary,
-          padding: const EdgeInsets.all(16),
-          gap: 8.0,
-          iconSize: 33,
-          tabs: [
-            GButton(
-              icon: Icons.home,
-              iconSize: 30,
-              text: 'Home',
-              style: GnavStyle.oldSchool,
-              textColor: color.secondary,
-            ),
-            GButton(
-              icon: Icons.notification_important,
-              iconSize: 30,
-              text: 'Notification',
-              textColor: color.secondary,
-            ),
-            GButton(
-              icon: Icons.settings,
-              iconSize: 30,
-              text: 'Settings',
-              textColor: color.secondary,
-            ),
-          ],
-          onTabChange: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-            controller.jumpToPage(index);
-          },
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+          child: GNav(
+            tabBackgroundColor: color.primary,
+            padding: const EdgeInsets.all(16),
+            gap: 8.0,
+            iconSize: 33,
+            tabs: [
+              GButton(
+                icon: Icons.home,
+                iconSize: 30,
+                text: 'Home',
+                style: GnavStyle.oldSchool,
+                textColor: color.secondary,
+              ),
+              GButton(
+                icon: Icons.notification_important,
+                iconSize: 30,
+                text: 'Notification',
+                textColor: color.secondary,
+              ),
+              GButton(
+                icon: Icons.settings,
+                iconSize: 30,
+                text: 'Settings',
+                textColor: color.secondary,
+              ),
+            ],
+            onTabChange: (index) {
+              setState(() {
+                currentIndex = index;
+                pageIndex = index;
+                tabIndex = index;
+              });
+              // controller.jumpToPage(tabIndex);
+            },
+            selectedIndex: currentIndex,
+          ),
         ),
-      ),
-      body: PageView.builder(
-        onPageChanged: (page) {
-          setState(() {
-            currentIndex = page;
-          });
-        },
-        controller: controller,
-        itemBuilder: (context, position) {
-          switch (position) {
-            case 0:
-              return const MainScreen();
-            case 1:
-              return const NotificationsScreen();
-            case 2:
-              return const SettingsScreen();
-            default:
-              return Container();
-          }
-        },
-        itemCount: 3,
+        body: PageView.builder(
+          onPageChanged: (page) {
+            setState(() {
+              currentIndex = page;
+              tabIndex = page;
+              pageIndex = page;
+            });
+            // controller.jumpToPage(pageIndex);
+          },
+          controller: controller,
+          itemBuilder: (context, position) {
+            // debugPrint("current: $currentIndex");
+            // print("Tab: $tabIndex");
+            // print("Page: $pageIndex");
+            switch (currentIndex) {
+              case 0:
+                return const MainScreen();
+              case 1:
+                return const NotificationsScreen();
+              case 2:
+                return const SettingsScreen();
+              default:
+                return Container();
+            }
+          },
+          itemCount: 3,
+        ),
       ),
     );
   }
@@ -264,7 +277,10 @@ class _MainScreenState extends State<MainScreen> {
                                     //     builder: (context) => SuccessScreen(
                                     //       message:
                                     //           "Password was Reset Successfully. Proceed To Login",
-                                    //       navigateTo: () {},
+                                    //       navigateTo: () {
+                                    //         Navigator.pushNamed(
+                                    //             context, LoginScreen.routeName);
+                                    //       },
                                     //     ),
                                     //   ),
                                     // );

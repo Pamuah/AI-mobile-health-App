@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import '../models/api.dart';
 import '../models/email_args.dart';
 import '../widgets/custom_snackbar.dart';
 import '../widgets/custom_textfield.dart';
@@ -22,16 +24,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final TextEditingController newPasswordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
-  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
+  final String serverEndPoint = Api.userEndpoint;
   bool showPassword = false;
   bool showConfirm = false;
   bool isLoading = false;
+  String email = "none";
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final args = ModalRoute.of(context)!.settings.arguments as EmailArgs;
-    String email = args.email;
+    // final EmailArgs args =
+    //     ModalRoute.of(context)!.settings.arguments as EmailArgs;
+    // email = args.email;
 
     return GestureDetector(
       onTap: () {
@@ -171,13 +175,19 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             try {
                               if (await resetPassword(email)) {
                                 if (context.mounted) {
-                                  CustomSnackbar(
-                                          message:
-                                              "Password Reset Successfully",
-                                          context: context)
-                                      .show();
-                                  Navigator.pushNamed(
-                                      context, LoginScreen.routeName);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => SuccessScreen(
+                                        message:
+                                            "Password was Reset Successfully. You can Log into your Account Now",
+                                        navigateTo: () {
+                                          Navigator.pushNamed(
+                                              context, LoginScreen.routeName);
+                                        },
+                                      ),
+                                    ),
+                                  );
                                 }
                               }
                             } catch (e) {

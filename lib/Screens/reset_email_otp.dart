@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/models/email_args.dart';
-import 'package:ai_mhealth_app/models/user_args.dart';
 import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/gestures.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/api.dart';
 import '../widgets/custom_snackbar.dart';
 
 class ResetEmailOTPScreen extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
+  final String serverEndPoint = Api.userEndpoint;
 
   @override
   void dispose() {

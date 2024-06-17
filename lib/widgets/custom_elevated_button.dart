@@ -12,8 +12,8 @@ class CustomElevatedButton extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
 
     return SizedBox(
-      height: 60,
-      width: 150,
+      height: 70,
+      width: double.infinity,
       child: ElevatedButton(
         onPressed: () {
           SystemChannels.textInput.invokeMethod<void>('TextInput.hide');
@@ -26,6 +26,7 @@ class CustomElevatedButton extends StatelessWidget {
               color: color.secondary,
               fontSize: 16,
               fontWeight: FontWeight.w700),
+          textAlign: TextAlign.center,
         ),
       ),
     );

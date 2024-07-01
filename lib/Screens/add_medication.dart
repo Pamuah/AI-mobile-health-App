@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/models/notification.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:ai_mhealth_app/widgets/medication_time_card.dart';
@@ -30,10 +31,33 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
+
+      bottomNavigationBar: SizedBox(
+        height: 75,
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+              NotificationService.showInstantNotification(
+                    "Medication Scheduled", "This shows an instant notifications");
+            Navigator.of(context).pop();
+          },
+          style: ElevatedButton.styleFrom(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero)),
+          child: Text(
+            "Done",
+            style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 20,
+              color: color.secondary,
+            ),
+          ),
+
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Add Medication",
+
         ),
       ),
       body: SafeArea(
@@ -43,6 +67,27 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
+                IconButton(
+                  onPressed: () {
+                  
+                  
+                  },
+                  icon: const Icon(Icons.arrow_back_ios_new),
+                ),
+                const Divider(
+                  height: 12,
+                  thickness: 0.005,
+                ),
+                Text(
+                  "Add Medication",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 28,
+                    color: color.secondary,
+                  ),
+                ),
+
                 const Divider(
                   height: 15,
                   thickness: 0.005,

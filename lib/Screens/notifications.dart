@@ -26,37 +26,43 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           centerTitle: true,
           leading: const SizedBox()),
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            // Text(
-            //   "No Current Notifications",
-            //   style: TextStyle(
-            //     fontSize: 22,
-            //     fontWeight: FontWeight.bold,
-            //     color: Colors.red,
-            //   ),
-            // ),
-            // Icon(
-            //   Icons.markunread_mailbox_outlined,
-            //   size: 150,
-            //   color: Colors.red,
-            // ),
-            Expanded(
-              child: ListView.separated(
-                  itemBuilder: (context, index) {
-                    return NotificationTile(
-                      leadingIcon:
-                          const Icon(Icons.notifications_active_outlined),
-                      title: "You have a new notification",
-                      subTitle: DateTime.now().toString(),
-                    );
-                  },
-                  separatorBuilder: (context, index) => const Divider(),
-                  itemCount: 10),
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // Text(
+              //   "No Current Notifications",
+              //   style: TextStyle(
+              //     fontSize: 22,
+              //     fontWeight: FontWeight.bold,
+              //     color: Colors.red,
+              //   ),
+              // ),
+              // Icon(
+              //   Icons.markunread_mailbox_outlined,
+              //   size: 150,
+              //   color: Colors.red,
+              // ),
+              Expanded(
+                child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return NotificationTile(
+                        leadingIcon:
+                            const Icon(Icons.notifications_active_outlined),
+                        title: "You have a new notification",
+                        subTitle: DateTime.now().toString(),
+                      );
+                    },
+                    separatorBuilder: (context, index) => const Divider(
+                          height: 20,
+                          thickness: 0.0001,
+                        ),
+                    itemCount: 10),
+              )
+            ],
+          ),
         ),
       ),
     );

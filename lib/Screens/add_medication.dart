@@ -1,5 +1,10 @@
 import 'package:ai_mhealth_app/models/notification.dart';
+import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
+import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
+import 'package:ai_mhealth_app/widgets/medication_time_card.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/appbar.dart';
 
 class AddMedicationScreen extends StatefulWidget {
   static const routeName = '/add-medication';
@@ -11,11 +16,22 @@ class AddMedicationScreen extends StatefulWidget {
 }
 
 class _AddMedicationScreenState extends State<AddMedicationScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController durationController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    durationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
+
       bottomNavigationBar: SizedBox(
         height: 75,
         width: double.infinity,
@@ -36,15 +52,22 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
               color: color.secondary,
             ),
           ),
+
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 70),
+        child: MyAppBar(
+          title: "Add Medication",
+
         ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 IconButton(
                   onPressed: () {
                   
@@ -64,24 +87,30 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                     color: color.secondary,
                   ),
                 ),
+
                 const Divider(
                   height: 15,
                   thickness: 0.005,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Medication Name"),
-                  ),
-                ),
+                // TextFormField(
+                //   decoration: const InputDecoration(
+                //     label: Text("Medication Name"),
+                //   ),
+                // ),
+                CustomTextField(
+                    hintText: "Medication Name", controller: nameController),
                 const Divider(
                   height: 20,
                   thickness: 0.005,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Duration"),
-                  ),
-                ),
+                // TextFormField(
+                //   decoration: const InputDecoration(
+                //     label: Text("Duration"),
+                //   ),
+                // ),
+                CustomTextField(
+                    hintText: "Medication Duration",
+                    controller: durationController),
                 const Divider(
                   height: 45,
                   thickness: 0.005,
@@ -104,51 +133,32 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                     InkWell(
                       onTap: () {
                         showTimePicker(
+                          
                           context: context,
                           initialTime: TimeOfDay.now(),
                         );
                       },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
+                      child: MedicationTimeCard(
+                        text: "Morning",
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: Icon(
+                                Icons.sunny,
+                                color: color.secondary,
+                                size: 30,
                               ),
-                              color: color.primary,
                             ),
-                            child: Stack(
-                              alignment: AlignmentDirectional.center,
-                              children: [
-                                Positioned(
-                                  left: 0,
-                                  top: 0,
-                                  child: Icon(
-                                    Icons.sunny,
-                                    color: color.secondary,
-                                    size: 30,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.cloud,
-                                  color: color.secondary,
-                                  size: 40,
-                                )
-                              ],
-                            ),
-                          ),
-                          Text(
-                            "Morning",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
+                            Icon(
+                              Icons.cloud,
                               color: color.secondary,
-                            ),
-                          ),
-                        ],
+                              size: 40,
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     InkWell(
@@ -158,33 +168,13 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                           initialTime: TimeOfDay.now(),
                         );
                       },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              color: color.primary,
-                            ),
-                            child: Icon(
-                              Icons.sunny,
-                              color: color.secondary,
-                              size: 40,
-                            ),
-                          ),
-                          Text(
-                            "Afternoon",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: color.secondary,
-                            ),
-                          ),
-                        ],
+                      child: MedicationTimeCard(
+                        text: "Afternoon",
+                        child: Icon(
+                          Icons.sunny,
+                          color: color.secondary,
+                          size: 40,
+                        ),
                       ),
                     ),
                     InkWell(
@@ -194,66 +184,25 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                           initialTime: TimeOfDay.now(),
                         );
                       },
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(15),
-                            height: 70,
-                            width: 70,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                              color: color.primary,
-                            ),
-                            child: Icon(
-                              Icons.mode_night_outlined,
-                              color: color.secondary,
-                              size: 40,
-                            ),
-                          ),
-                          Text(
-                            "Evening",
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 16,
-                              color: color.secondary,
-                            ),
-                          )
-                        ],
+                      child: MedicationTimeCard(
+                        text: "Evening",
+                        child: Icon(
+                          Icons.mode_night_outlined,
+                          color: color.secondary,
+                          size: 40,
+                        ),
                       ),
                     ),
                   ],
                 ),
-                // const Divider(
-                //   height: 20,
-                //   thickness: 0.005,
-                // ),
-                // Text(
-                //   "Set Notification Time ",
-                //   style: TextStyle(
-                //     fontWeight: FontWeight.w500,
-                //     fontSize: 20,
-                //     color: color.secondary,
-                //   ),
-                // ),
-                // const Divider(
-                //   height: 5,
-                //   thickness: 0.005,
-                // ),
-                // IconButton(
-                //   onPressed: () {
-                //     showTimePicker(
-                //       context: context,
-                //       initialTime: TimeOfDay.now(),
-                //     );
-                //   },
-                //   icon: const Icon(Icons.calendar_month_outlined),
-                // ),
-                // const Divider(
-                //   height: 150,
-                //   thickness: 0.005,
-                // ),
+                const Divider(
+                  height: 30,
+                  thickness: 0.005,
+                ),
+                CustomElevatedButton(
+                  text: 'Done',
+                  onPressed: () {},
+                ),
               ],
             ),
           ),

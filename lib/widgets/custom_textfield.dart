@@ -5,20 +5,20 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     required this.controller,
-    required this.contentPadding,
-    required this.height,
-    required this.width,
-    required this.obscure,
+    this.contentPadding = const EdgeInsets.all(10),
+    this.obscure = false,
     this.keyboard = TextInputType.name,
+    this.prefixIcon,
+    this.suffixIcon,
   });
 
   final String hintText;
-  final double height;
-  final double width;
   final TextEditingController controller;
   final EdgeInsetsGeometry contentPadding;
   final bool obscure;
   final TextInputType keyboard;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +26,25 @@ class CustomTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 25.0),
       child: SizedBox(
-        height: height,
-        width: width,
+        width: double.infinity,
         child: TextFormField(
+          validator: (value) {
+            if (value!.trim().isEmpty) {
+              return "Required Field missing";
+            }
+            return null;
+          },
           controller: controller,
           decoration: InputDecoration(
-            contentPadding: contentPadding,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            contentPadding: const EdgeInsets.only(top: 5, left: 16.0),
             border: OutlineInputBorder(
               borderSide: BorderSide(color: color.secondary, width: 2.0),
+              borderRadius: BorderRadius.circular(25),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: color.onTertiary, width: 2.0),
               borderRadius: BorderRadius.circular(25),
             ),
             hintText: hintText,

@@ -1,11 +1,15 @@
+import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/notifications.dart';
+import 'package:ai_mhealth_app/Screens/privacy.dart';
 import 'package:ai_mhealth_app/widgets/setting_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.provider.dart';
+import 'account_info.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static const routeName = '/settings-screen';
+  static const routeName = '/settings';
 
   const SettingsScreen({super.key});
 
@@ -18,7 +22,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final String useremail =
-        Provider.of<UserData>(context, listen: false).useremail;
+        Provider.of<UserData>(context, listen: false).userEmail;
     final List<String> titles = [
       "Account",
       "Notification",
@@ -40,24 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         toolbarHeight: 70,
         elevation: 0,
         backgroundColor: color.primary,
-        leading: Container(
-          height: 55,
-          width: 60,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color.primary,
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 24,
-              color: color.onPrimary,
-            ),
-          ),
-        ),
+          leading: const SizedBox()
       ),
       body: Column(
         children: [
@@ -90,6 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       fontWeight: FontWeight.bold,
                       color: color.onPrimary,
                       letterSpacing: 1.2),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -102,11 +90,28 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 itemBuilder: (context, index) => SettingsTile(
                       icon: icons[index],
                       name: titles[index],
-                      onTap: () {},
+                      onTap: () {
+                        switch (index) {
+                          case 0:
+                            Navigator.pushNamed(
+                                context, AccountInfoScreen.routeName);
+                          case 1:
+                            Navigator.pushNamed(
+                                context, NotificationsScreen.routeName);
+                            break;
+                          case 2:
+                            Navigator.pushNamed(
+                                context, PrivacyScreen.routeName);
+                          case 4:
+                            Navigator.pushNamed(context, LoginScreen.routeName);
+                          default:
+                        }
+                      },
                     ),
                 separatorBuilder: (context, index) => const Divider(
-                      height: 5,
-                      thickness: 0.001,
+                      height: 1,
+                      thickness: 1,
+                      endIndent: 100,
                     ),
                 itemCount: titles.length),
           )

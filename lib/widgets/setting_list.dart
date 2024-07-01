@@ -29,7 +29,6 @@ class SettingsTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: color.secondary),
           ),
-          dense: false,
           trailing: const Icon(Icons.arrow_forward_ios),
         ),
       ),

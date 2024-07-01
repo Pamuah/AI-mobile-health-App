@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.provider.dart';
+import '../widgets/appbar.dart';
 
 class MedicationReminderScreen extends StatefulWidget {
   static const routeName = '/health-reminder';
@@ -20,10 +21,11 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final String username =
-        Provider.of<UserData>(context, listen: false).username;
+        Provider.of<UserData>(context, listen: false).userName;
     final provider = Provider.of<MedicationData>(context, listen: false);
 
     return Scaffold(
+<
       appBar: AppBar(
         elevation:0,
         title: Text(
@@ -40,13 +42,19 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
             Navigator.of(context).pop();
           },
           icon: const Icon(Icons.arrow_back_ios_new_rounded),
+
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 70),
+        child: MyAppBar(
+          title: "Medication Reminder",
+
         ),
       ),
       // backgroundColor: color.surface,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Divider(
@@ -74,6 +82,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                       ),
                     ),
                   ]),
+              textAlign: TextAlign.left,
             ),
             const Divider(
               height: 15,
@@ -111,13 +120,11 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                     ),
                   ],
                 ),
-                Text(
-                  "👋",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 75,
-                    color: color.secondary,
-                  ),
+                const Spacer(),
+                Image.asset(
+                  'assets/medicine.png',
+                  height: 100,
+                  width: 100,
                 ),
               ]),
             ),
@@ -144,10 +151,13 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   return ListView.separated(
                       itemBuilder: (context, index) {
                         return MedicationTile(
-                            name: value.getMedicationByIndex(index).name,
-                            isDone: value.getMedicationByIndex(index).completed
-                                ? "Completed"
-                                : "In-Progress");
+                          name: value.getMedicationByIndex(index).name,
+                          isDone: value.getMedicationByIndex(index).completed
+                              ? "Completed"
+                              : "In-Progress",
+                          // isDone:
+                          //     "${value.getMedicationByIndex(index).morining}",
+                        );
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return const Divider(

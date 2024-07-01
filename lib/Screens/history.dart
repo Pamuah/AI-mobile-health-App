@@ -1,6 +1,8 @@
 import 'package:ai_mhealth_app/widgets/notification_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../widgets/appbar.dart';
+
 class PatientHistoryScreen extends StatefulWidget {
   static const routeName = "/patient-history";
 
@@ -18,18 +20,10 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Patient History",
-          style: TextStyle(fontWeight: FontWeight.bold, color: color.secondary),
-        ),
-        centerTitle: true,
-        toolbarHeight: 80,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 70),
+        child: MyAppBar(
+          title: "Patient History",
         ),
       ),
       body: SafeArea(

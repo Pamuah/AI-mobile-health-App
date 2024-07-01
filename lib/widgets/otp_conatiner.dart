@@ -17,7 +17,7 @@ class OtpContainer extends StatelessWidget {
             side: BorderSide(color: color.secondary, width: 1)),
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           TextFormField(
             maxLength: 1,
@@ -31,6 +31,7 @@ class OtpContainer extends StatelessWidget {
             ),
             decoration: const InputDecoration(
               hintText: "0",
+              counterText: "",
               hintStyle: TextStyle(
                 fontSize: 30,
               ),
@@ -39,7 +40,7 @@ class OtpContainer extends StatelessWidget {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 FocusScope.of(context).nextFocus();
-              }
+              } 
             },
           ),
         ],

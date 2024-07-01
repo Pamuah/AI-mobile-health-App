@@ -20,9 +20,9 @@ class AccountInfoScreen extends StatelessWidget {
     final int userid = Provider.of<UserData>(context, listen: false).userId;
 
     final List<String> properties = [
-      "name",
-      "id",
-      "email",
+      "Name:",
+      "ID:",
+      "Email:",
       // "password",
     ];
     final List<String> values = [

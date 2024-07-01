@@ -16,6 +16,7 @@ import 'package:ai_mhealth_app/Screens/health_tips.dart';
 import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/settings.dart';
+import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:flutter/material.dart';
 import 'package:ai_mhealth_app/Screens/doctor.dart';
 import '../Screens/sign_up.dart';
@@ -40,11 +41,20 @@ class AppRoutes {
       EmailOtpScreen.routeName: (context) => const EmailOtpScreen(),
       ForgotPasswordScreen.routeName: (context) => const ForgotPasswordScreen(),
       ResetEmailOTPScreen.routeName: (context) => const ResetEmailOTPScreen(),
-      ResetPasswordScreen.routeName: (context) => const ResetPasswordScreen(),
+      ResetPasswordScreen.resetRouteName: (context) =>
+          const ResetPasswordScreen(),
+      ResetPasswordScreen.changeRouteName: (context) =>
+          const ResetPasswordScreen(
+            buttonText: "Change Password",
+            routeTo: SuccessScreen.changeRouteName,
+          ),
       AccountInfoScreen.routeName: (context) => const AccountInfoScreen(),
       PrivacyScreen.routeName: (context) => const PrivacyScreen(),
       PasswordVerificationScreen.routeName: (context) =>
           const PasswordVerificationScreen(),
+      SuccessScreen.resetRouteName: (context) => const SuccessScreen(),
+      SuccessScreen.changeRouteName: (context) => const SuccessScreen(
+          message: "Password was Successfully Changed. Proceed To Home Screen"),
     };
   }
 }

@@ -1,13 +1,18 @@
+import 'package:ai_mhealth_app/Screens/home.dart';
+import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
-  static const routeName = '/success';
+  static const resetRouteName = '/reset-success';
+  static const String changeRouteName = '/password-change';
 
-  const SuccessScreen(
-      {super.key, required this.message, required this.navigateTo});
+  const SuccessScreen({
+    super.key,
+    this.message =
+        "Password was Reset Successfully. You can Log into your Account Now",
+  });
   final String message;
-  final Function() navigateTo;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +65,12 @@ class SuccessScreen extends StatelessWidget {
             CustomElevatedButton(
                 text: "Continue",
                 onPressed: () {
-                  navigateTo();
+                  if (message ==
+                      "Password was Reset Successfully. You can Log into your Account Now") {
+                    Navigator.pushNamed(context, LoginScreen.routeName);
+                  } else {
+                    Navigator.pushNamed(context, HomeScreen.routeName);
+                  }
                 })
           ],
         ),

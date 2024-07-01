@@ -1,5 +1,6 @@
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
+import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,10 +46,15 @@ class _PasswordVerificationScreenState
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              // mainAxisSize: MainAxisSize.min,
               children: [
+                const Divider(
+                  height: 30,
+                  thickness: 0.005,
+                ),
                 Image.asset(
                   'assets/verification.png',
                   height: 150,
@@ -83,8 +89,6 @@ class _PasswordVerificationScreenState
                   hintText: "Current Password",
                   controller: controller,
                   contentPadding: const EdgeInsets.all(10),
-                  height: 50,
-                  width: double.infinity,
                   obscure: showPassword ? false : true,
                   prefixIcon: const Icon(Icons.lock_outlined),
                   suffixIcon: InkWell(
@@ -108,10 +112,37 @@ class _PasswordVerificationScreenState
                 CustomElevatedButton(
                     text: "Confirm and Proceed",
                     onPressed: () {
-                      Navigator.pushNamed(
-                        context,
-                        ResetPasswordScreen.routeName,
-                      );
+                      final String alledgedPassword =
+                          controller.value.text.trim();
+                      if (alledgedPassword != "") {
+                        try {
+                          if (verifyPassword()) {
+                            CustomSnackbar(
+                                message: "Verification Successful",
+                                context: context);
+                            Navigator.pushNamed(
+                              context,
+                              ResetPasswordScreen.changeRouteName,
+                            );
+                          } else {
+                            CustomSnackbar(
+                                    message: "You Entered a wrong password",
+                                    context: context)
+                                .show();
+                          }
+                        } catch (e) {
+                          CustomSnackbar(
+                                  message:
+                                      " An Error occured while Verifying Password",
+                                  context: context)
+                              .show();
+                        }
+                      } else {
+                        CustomSnackbar(
+                                message: "The field cannot be Empty",
+                                context: context)
+                            .show();
+                      }
                     })
               ],
             ),
@@ -119,5 +150,13 @@ class _PasswordVerificationScreenState
         ),
       ),
     );
+  }
+
+  bool verifyPassword() {
+    final String alledgedPassword = controller.value.text.trim();
+    if (alledgedPassword == currentPassword) {
+      return true;
+    }
+    return false;
   }
 }

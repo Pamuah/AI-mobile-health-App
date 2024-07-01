@@ -1,4 +1,3 @@
-import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/Screens/privacy.dart';
@@ -10,7 +9,7 @@ import '../providers/user.provider.dart';
 import 'account_info.dart';
 
 class SettingsScreen extends StatefulWidget {
-  static const routeName = '/settings-screen';
+  static const routeName = '/settings';
 
   const SettingsScreen({super.key});
 
@@ -45,24 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         toolbarHeight: 70,
         elevation: 0,
         backgroundColor: color.primary,
-        leading: Container(
-          height: 55,
-          width: 60,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color.primary,
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 24,
-              color: color.onPrimary,
-            ),
-          ),
-        ),
+          leading: const SizedBox()
       ),
       body: Column(
         children: [
@@ -95,6 +77,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       fontWeight: FontWeight.bold,
                       color: color.onPrimary,
                       letterSpacing: 1.2),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -126,8 +109,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       },
                     ),
                 separatorBuilder: (context, index) => const Divider(
-                      height: 5,
-                      thickness: 0.001,
+                      height: 1,
+                      thickness: 1,
+                      endIndent: 100,
                     ),
                 itemCount: titles.length),
           )

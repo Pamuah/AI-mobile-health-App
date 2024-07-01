@@ -2,14 +2,17 @@ import 'dart:convert';
 
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/models/email_args.dart';
+import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/otp_conatiner.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 import '../models/api.dart';
+import '../widgets/appbar.dart';
 import '../widgets/custom_snackbar.dart';
 
 class ResetEmailOTPScreen extends StatefulWidget {
@@ -43,7 +46,11 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
     final color = Theme.of(context).colorScheme;
     final args = ModalRoute.of(context)!.settings.arguments as EmailArgs;
     // String email = "Kat@gmail.com";
-    String email = args.email;
+    String? email = args.email;
+    // if (email == null) {
+    //   email = Provider.of<UserData>(context, listen: false).userEmail;
+    // }
+    email ?? Provider.of<UserData>(context).userEmail;
 
     return GestureDetector(
       onTap: () {
@@ -53,33 +60,10 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 70,
-            elevation: 0,
-            backgroundColor: color.primary,
-            title: Text(
-              "Email Verification",
-              style: TextStyle(
-                  color: color.onPrimary, fontWeight: FontWeight.w700),
-            ),
-            centerTitle: true,
-            leading: Container(
-              height: 55,
-              width: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color.primary,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 24,
-                  color: color.onPrimary,
-                ),
-              ),
+          appBar: const PreferredSize(
+            preferredSize: Size(double.infinity, 70),
+            child: MyAppBar(
+              title: "Reset Password",
             ),
           ),
           body: SafeArea(
@@ -191,7 +175,7 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
                               if (context.mounted) {
                                 Navigator.pushNamed(
                                   context,
-                                  ResetPasswordScreen.routeName,
+                                  ResetPasswordScreen.resetRouteName,
                                   arguments: EmailArgs(email: email),
                                 );
                               }

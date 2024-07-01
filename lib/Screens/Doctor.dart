@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/appbar.dart';
+
 class DoctorScreen extends StatefulWidget {
   static const routeName = '/doctor';
   const DoctorScreen({super.key});
@@ -15,18 +17,10 @@ class _DoctorScreenState extends State<DoctorScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Consultation",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        toolbarHeight: 70,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 70),
+        child: MyAppBar(
+          title: "Consulatation",
         ),
       ),
       body: SafeArea(

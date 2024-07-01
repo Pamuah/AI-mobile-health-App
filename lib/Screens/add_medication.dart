@@ -1,6 +1,9 @@
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
+import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:ai_mhealth_app/widgets/medication_time_card.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/appbar.dart';
 
 class AddMedicationScreen extends StatefulWidget {
   static const routeName = '/add-medication';
@@ -12,37 +15,25 @@ class AddMedicationScreen extends StatefulWidget {
 }
 
 class _AddMedicationScreenState extends State<AddMedicationScreen> {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController durationController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    durationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 70,
-        elevation: 0,
-        backgroundColor: color.primary,
-        title: Text(
-          "Add Medication",
-          style: TextStyle(color: color.onPrimary, fontWeight: FontWeight.w700),
-        ),
-        centerTitle: true,
-        leading: Container(
-          height: 55,
-          width: 60,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: color.primary,
-          ),
-          child: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 24,
-              color: color.onPrimary,
-            ),
-          ),
+      appBar: const PreferredSize(
+        preferredSize: Size(double.infinity, 70),
+        child: MyAppBar(
+          title: "Add Medication",
         ),
       ),
       body: SafeArea(
@@ -56,20 +47,25 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                   height: 15,
                   thickness: 0.005,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Medication Name"),
-                  ),
-                ),
+                // TextFormField(
+                //   decoration: const InputDecoration(
+                //     label: Text("Medication Name"),
+                //   ),
+                // ),
+                CustomTextField(
+                    hintText: "Medication Name", controller: nameController),
                 const Divider(
                   height: 20,
                   thickness: 0.005,
                 ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    label: Text("Duration"),
-                  ),
-                ),
+                // TextFormField(
+                //   decoration: const InputDecoration(
+                //     label: Text("Duration"),
+                //   ),
+                // ),
+                CustomTextField(
+                    hintText: "Medication Duration",
+                    controller: durationController),
                 const Divider(
                   height: 45,
                   thickness: 0.005,
@@ -89,42 +85,67 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    MedicationTimeCard(
-                      text: "Morning",
-                      child: Stack(
-                        alignment: AlignmentDirectional.center,
-                        children: [
-                          Positioned(
-                            left: 0,
-                            top: 0,
-                            child: Icon(
-                              Icons.sunny,
-                              color: color.secondary,
-                              size: 30,
+                    InkWell(
+                      onTap: () {
+                        showTimePicker(
+                          
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+                      },
+                      child: MedicationTimeCard(
+                        text: "Morning",
+                        child: Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: Icon(
+                                Icons.sunny,
+                                color: color.secondary,
+                                size: 30,
+                              ),
                             ),
-                          ),
-                          Icon(
-                            Icons.cloud,
-                            color: color.secondary,
-                            size: 40,
-                          )
-                        ],
+                            Icon(
+                              Icons.cloud,
+                              color: color.secondary,
+                              size: 40,
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    MedicationTimeCard(
-                      text: "Afternoon",
-                      child: Icon(
-                        Icons.sunny,
-                        color: color.secondary,
-                        size: 40,
+                    InkWell(
+                      onTap: () {
+                        showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+                      },
+                      child: MedicationTimeCard(
+                        text: "Afternoon",
+                        child: Icon(
+                          Icons.sunny,
+                          color: color.secondary,
+                          size: 40,
+                        ),
                       ),
                     ),
-                    MedicationTimeCard(
-                      text: "Evening",
-                      child: Icon(
-                        Icons.mode_night_outlined,
-                        color: color.secondary,
-                        size: 40,
+                    InkWell(
+                      onTap: () {
+                        showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        );
+                      },
+                      child: MedicationTimeCard(
+                        text: "Evening",
+                        child: Icon(
+                          Icons.mode_night_outlined,
+                          color: color.secondary,
+                          size: 40,
+                        ),
                       ),
                     ),
                   ],

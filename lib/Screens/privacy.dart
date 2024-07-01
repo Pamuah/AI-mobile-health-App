@@ -13,7 +13,7 @@ class PrivacyScreen extends StatelessWidget {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
       appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 50),
+        preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Privacy",
         ),

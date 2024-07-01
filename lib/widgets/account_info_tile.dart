@@ -19,9 +19,9 @@ class AccountInfoTile extends StatelessWidget {
         ),
       ),
       trailing: SizedBox(
-        width: 200,
+        width: 150,
         child: Align(
-          alignment: Alignment.centerRight,
+          alignment: Alignment.centerLeft,
           child: Text(
             value,
             style: TextStyle(color: color.secondary, fontSize: 18),

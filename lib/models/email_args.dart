@@ -1,5 +1,5 @@
 class EmailArgs {
-  final String email;
+  final String? email;
 
   EmailArgs({required this.email});
 }

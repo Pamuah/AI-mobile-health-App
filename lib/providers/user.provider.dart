@@ -4,7 +4,7 @@ import '../models/user.dart';
 
 class UserData extends ChangeNotifier {
   User currentUser =
-      User(email: "none", id: 00000000, name: "none", password: "Password@123");
+      User(email: "none", id: 00000000, name: "none", password: "none");
 
   void getUser(User user) {
     currentUser = user;

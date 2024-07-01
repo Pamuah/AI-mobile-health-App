@@ -29,6 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isLoading = false;
   bool showPassword = false;
   final String serverEndPoint = Api.userEndpoint;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -56,171 +57,166 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 30.0, top: 70),
-                        child: Text(
-                          'Login',
-                          style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w500,
-                              color: color.secondary),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 30.0, top: 70),
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500,
+                                color: color.secondary),
+                          ),
                         ),
-                      ),
-                      CustomTextField(
-                        prefixIcon: const Icon(Icons.email_outlined),
-                        suffixIcon: const SizedBox(),
-                        hintText: 'Email',
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        controller: emailController,
-                        contentPadding:
-                            const EdgeInsets.only(top: 5, left: 16.0),
-                        obscure: false,
-                        keyboard: TextInputType.emailAddress,
-                      ),
-                      CustomTextField(
-                        prefixIcon: const Icon(Icons.key_outlined),
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            setState(
-                              () {
-                                showPassword = !showPassword;
-                              },
-                            );
-                          },
-                          child: showPassword
-                              ? const Icon(Icons.visibility_outlined)
-                              : const Icon(Icons.visibility_off_outlined),
+                        CustomTextField(
+                          prefixIcon: const Icon(Icons.email_outlined),
+                          suffixIcon: null,
+                          hintText: 'Email',
+                          controller: emailController,
+                          contentPadding:
+                              const EdgeInsets.only(top: 5, left: 16.0),
+                          obscure: false,
+                          keyboard: TextInputType.emailAddress,
                         ),
-                        hintText: ' Password',
-                        height: 50,
-                        width: MediaQuery.of(context).size.width,
-                        controller: passwordController,
-                        contentPadding:
-                            const EdgeInsets.only(top: 5, left: 16.0),
-                        obscure: showPassword ? false : true,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0, top: 25.0),
-                        child: SizedBox(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              SystemChannels.textInput
-                                  .invokeMethod<void>('TextInput.hide');
-                              if (emailController.value.text.trim() == "" ||
-                                  passwordController.value.text.trim() == "") {
-                                CustomSnackbar(
-                                        message:
-                                            "Email or Password should not be Empty",
-                                        context: context)
-                                    .show();
-                              } else {
-                                try {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-                                  if (await logIn()) {
-                                    if (context.mounted) {
-                                      CustomSnackbar(
-                                              message: "Login Successful",
-                                              context: context)
-                                          .show();
-                                      Navigator.pushNamed(context, '/home');
+                        CustomTextField(
+                          prefixIcon: const Icon(Icons.key_outlined),
+                          suffixIcon: InkWell(
+                            onTap: () {
+                              setState(
+                                () {
+                                  showPassword = !showPassword;
+                                },
+                              );
+                            },
+                            child: showPassword
+                                ? const Icon(Icons.visibility_outlined)
+                                : const Icon(Icons.visibility_off_outlined),
+                          ),
+                          hintText: ' Password',
+                          controller: passwordController,
+                          contentPadding:
+                              const EdgeInsets.only(top: 5, left: 16.0),
+                          obscure: showPassword ? false : true,
+                        ),
+                        Padding(
+                          padding:
+                              const EdgeInsets.only(bottom: 20.0, top: 25.0),
+                          child: SizedBox(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                SystemChannels.textInput
+                                    .invokeMethod<void>('TextInput.hide');
+                                if (!_formKey.currentState!.validate()) {
+                                  return;
+                                } else {
+                                  try {
+                                    setState(() {
+                                      isLoading = true;
+                                    });
+                                    if (await logIn()) {
+                                      if (context.mounted) {
+                                        CustomSnackbar(
+                                                message: "Login Successful",
+                                                context: context)
+                                            .show();
+                                        Navigator.pushNamed(context, '/home');
+                                      }
+                                    } else {
+                                      if (context.mounted) {
+                                        CustomSnackbar(
+                                                message:
+                                                    "Wrong Password. Try Again!!",
+                                                context: context)
+                                            .show();
+                                      }
                                     }
-                                  } else {
+                                  } catch (e) {
                                     if (context.mounted) {
                                       CustomSnackbar(
                                               message:
-                                                  "Wrong Password. Try Again!!",
+                                                  "Enter a registered Email.",
                                               context: context)
                                           .show();
                                     }
                                   }
-                                } catch (e) {
-                                  if (context.mounted) {
-                                    CustomSnackbar(
-                                            message:
-                                                "Enter a registered Email.",
-                                            context: context)
-                                        .show();
-                                  }
+                                  setState(() {
+                                    isLoading = false;
+                                  });
                                 }
-                                setState(() {
-                                  isLoading = false;
-                                });
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: color.primary,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: color.primary,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
                               ),
-                            ),
-                            child: Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                                color: color.onPrimary,
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: color.onPrimary,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, ForgotPasswordScreen.routeName);
-                          },
-                          child: Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                                color: color.onSecondary,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                      const GoogleFacebook_btn(
-                          imagePath: 'assets/Google.jpg',
-                          text: 'Login with Google'),
-                      const Padding(
-                        padding: EdgeInsets.only(top: 20.0),
-                        child: GoogleFacebook_btn(
-                            imagePath: 'assets/facebook.jpg',
-                            text: 'Login with Facebook'),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "Don't have an Account?",
-                            style: TextStyle(
-                                color: color.secondary,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          TextButton(
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
                             onPressed: () {
                               Navigator.pushNamed(
-                                  context, SignUpScreen.routeName);
+                                  context, ForgotPasswordScreen.routeName);
                             },
                             child: Text(
-                              "Sign Up",
+                              "Forgot Password?",
                               style: TextStyle(
                                   color: color.onSecondary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400),
                             ),
-                          )
-                        ],
-                      ),
-                    ],
+                          ),
+                        ),
+                        const GoogleFacebook_btn(
+                            imagePath: 'assets/Google.jpg',
+                            text: 'Login with Google'),
+                        const Padding(
+                          padding: EdgeInsets.only(top: 20.0),
+                          child: GoogleFacebook_btn(
+                              imagePath: 'assets/facebook.jpg',
+                              text: 'Login with Facebook'),
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Don't have an Account?",
+                              style: TextStyle(
+                                  color: color.secondary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, SignUpScreen.routeName);
+                              },
+                              child: Text(
+                                "Sign Up",
+                                style: TextStyle(
+                                    color: color.onSecondary,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

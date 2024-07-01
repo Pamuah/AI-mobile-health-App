@@ -6,15 +6,23 @@ import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import '../models/api.dart';
 import '../models/email_args.dart';
+import '../providers/user.provider.dart';
 import '../widgets/custom_snackbar.dart';
 import '../widgets/custom_textfield.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
-  static const routeName = '/reset-password';
+  static const resetRouteName = '/reset-password';
+  static const changeRouteName = '/change-password';
 
-  const ResetPasswordScreen({super.key});
+  const ResetPasswordScreen(
+      {super.key,
+      this.buttonText = "Recover Password",
+      this.routeTo = SuccessScreen.resetRouteName});
+  final String buttonText;
+  final String routeTo;
 
   @override
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
@@ -28,14 +36,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   bool showPassword = false;
   bool showConfirm = false;
   bool isLoading = false;
-  String email = "none";
+  // String email = "none";
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    // final EmailArgs args =
-    //     ModalRoute.of(context)!.settings.arguments as EmailArgs;
-    // email = args.email;
+    final EmailArgs? args =
+        ModalRoute.of(context)?.settings.arguments as EmailArgs?;
+    String? email = args?.email;
+    email ??= Provider.of<UserData>(context).userEmail;
 
     return GestureDetector(
       onTap: () {
@@ -50,7 +59,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             elevation: 0,
             backgroundColor: color.primary,
             title: Text(
-              "Reset Password",
+              widget.buttonText,
               style: TextStyle(
                   color: color.onPrimary, fontWeight: FontWeight.w700),
             ),
@@ -122,8 +131,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       hintText: "New Password",
                       controller: newPasswordController,
                       contentPadding: const EdgeInsets.all(10),
-                      height: 50,
-                      width: double.infinity,
                       obscure: showPassword ? false : true,
                       prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: InkWell(
@@ -143,8 +150,6 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                       hintText: "Confirm Password",
                       controller: confirmPasswordController,
                       contentPadding: const EdgeInsets.all(10),
-                      height: 50,
-                      width: double.infinity,
                       obscure: showConfirm ? false : true,
                       prefixIcon: const Icon(Icons.lock_outlined),
                       suffixIcon: InkWell(
@@ -172,22 +177,13 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               .invokeMethod<void>('TextInput.hide');
                           if (newPasswordController.value.text ==
                               confirmPasswordController.value.text) {
+                            setState(() {
+                              isLoading = true;
+                            });
                             try {
                               if (await resetPassword(email)) {
                                 if (context.mounted) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => SuccessScreen(
-                                        message:
-                                            "Password was Reset Successfully. You can Log into your Account Now",
-                                        navigateTo: () {
-                                          Navigator.pushNamed(
-                                              context, LoginScreen.routeName);
-                                        },
-                                      ),
-                                    ),
-                                  );
+                                  Navigator.pushNamed(context, widget.routeTo);
                                 }
                               }
                             } catch (e) {
@@ -199,6 +195,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 ).show();
                               }
                             }
+                            setState(() {
+                              isLoading = false;
+                            });
                           } else {
                             if (context.mounted) {
                               CustomSnackbar(
@@ -211,7 +210,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: color.primary),
                         child: Text(
-                          "Recover Password",
+                          widget.buttonText,
                           style: TextStyle(
                               color: color.secondary,
                               fontSize: 16,

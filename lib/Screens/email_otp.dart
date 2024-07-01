@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
 import '../models/api.dart';
+import '../widgets/appbar.dart';
 import '../widgets/custom_snackbar.dart';
 
 class EmailOtpScreen extends StatefulWidget {
@@ -39,10 +40,10 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
-    final args = ModalRoute.of(context)!.settings.arguments as UserArgs;
-    final String name = args.name;
-    final String email = args.email;
-    final String password = args.password;
+    final args = ModalRoute.of(context)!.settings.arguments as UserArgs?;
+    final String? name = args?.name;
+    final String? email = args?.email;
+    final String? password = args?.password;
 
     return GestureDetector(
       onTap: () {
@@ -52,33 +53,10 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 70,
-            elevation: 0,
-            backgroundColor: color.primary,
-            title: Text(
-              "Account Verification",
-              style: TextStyle(
-                  color: color.onPrimary, fontWeight: FontWeight.w700),
-            ),
-            centerTitle: true,
-            leading: Container(
-              height: 55,
-              width: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color.primary,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 24,
-                  color: color.onPrimary,
-                ),
-              ),
+          appBar: const PreferredSize(
+            preferredSize: Size(double.infinity, 70),
+            child: MyAppBar(
+              title: "Account Verification",
             ),
           ),
           body: SafeArea(

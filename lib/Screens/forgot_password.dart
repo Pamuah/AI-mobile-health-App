@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/api.dart';
 import '../models/email_args.dart';
+import '../widgets/appbar.dart';
 import 'reset_email_otp.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -36,33 +37,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: AppBar(
-            toolbarHeight: 70,
-            elevation: 0,
-            backgroundColor: color.primary,
-            title: Text(
-              "Forgot Password",
-              style: TextStyle(
-                  color: color.onPrimary, fontWeight: FontWeight.w700),
-            ),
-            centerTitle: true,
-            leading: Container(
-              height: 55,
-              width: 60,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: color.primary,
-              ),
-              child: IconButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 24,
-                  color: color.onPrimary,
-                ),
-              ),
+          appBar: const PreferredSize(
+            preferredSize: Size(double.infinity, 70),
+            child: MyAppBar(
+              title: "Forgot Password",
             ),
           ),
           body: SafeArea(
@@ -117,11 +95,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       hintText: "Email",
                       controller: controller,
                       contentPadding: const EdgeInsets.all(10),
-                      height: 50,
-                      width: double.infinity,
                       obscure: false,
                       prefixIcon: const Icon(Icons.email_outlined),
-                      suffixIcon: const SizedBox(),
+                      suffixIcon: null,
                       keyboard: TextInputType.emailAddress,
                     ),
                     const Divider(

@@ -21,7 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://10.132.19.77:3000/mhealth-api/users";
+  final String serverEndPoint = "http://100.112.18.254:3000/mhealth-api/users";
 
   @override
   void dispose() {

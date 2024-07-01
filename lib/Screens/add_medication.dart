@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/models/notification.dart';
 import 'package:flutter/material.dart';
 
 class AddMedicationScreen extends StatefulWidget {
@@ -19,7 +20,11 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
         height: 75,
         width: double.infinity,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+              NotificationService.showInstantNotification(
+                    "Medication Scheduled", "This shows an instant notifications");
+            Navigator.of(context).pop();
+          },
           style: ElevatedButton.styleFrom(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero)),
@@ -42,7 +47,8 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                  
+                  
                   },
                   icon: const Icon(Icons.arrow_back_ios_new),
                 ),

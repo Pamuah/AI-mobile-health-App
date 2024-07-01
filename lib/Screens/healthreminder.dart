@@ -25,6 +25,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation:0,
         title: Text(
           "Medication Reminder",
           style: TextStyle(

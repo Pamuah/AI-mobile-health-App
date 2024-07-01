@@ -23,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
-  final String serverEndPoint = "http://localhost:3000/mhealth-api/users";
+  final String serverEndPoint = "http://100.112.18.254:3000/mhealth-api/users";
 
   @override
   void dispose() {

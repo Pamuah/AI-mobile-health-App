@@ -25,29 +25,12 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     final provider = Provider.of<MedicationData>(context, listen: false);
 
     return Scaffold(
-<
-      appBar: AppBar(
-        elevation:0,
-        title: Text(
-          "Medication Reminder",
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: color.secondary,
-              fontSize: 20),
-        ),
-        centerTitle: true,
-        toolbarHeight: 100,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_rounded),
+
 
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Medication Reminder",
-
         ),
       ),
       // backgroundColor: color.surface,
@@ -172,7 +155,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+              floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AddMedicationScreen.routeName);
         },
@@ -184,6 +167,6 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-    );
+   );
   }
 }

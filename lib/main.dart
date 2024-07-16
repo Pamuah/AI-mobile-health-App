@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/Screens/Doctor.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/const/app_routes.dart';
@@ -42,8 +43,8 @@ class MyApp extends StatelessWidget {
         theme: themeData(),
         debugShowCheckedModeBanner: true,
         routes: AppRoutes().getRoutes(),
-        initialRoute: LoginScreen.routeName,
-        home: const LoginScreen(),
+        initialRoute: DoctorScreen.routeName,
+        home: const DoctorScreen(),
       ),
     );
   }

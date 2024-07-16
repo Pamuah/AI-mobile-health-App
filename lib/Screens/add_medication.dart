@@ -51,15 +51,15 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
               fontSize: 20,
               color: color.secondary,
             ),
-          ),
+          ),),),
 
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Add Medication",
-
         ),
       ),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -68,25 +68,11 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                IconButton(
-                  onPressed: () {
-                  
-                  
-                  },
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                ),
                 const Divider(
                   height: 12,
                   thickness: 0.005,
                 ),
-                Text(
-                  "Add Medication",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    color: color.secondary,
-                  ),
-                ),
+              
 
                 const Divider(
                   height: 15,
@@ -199,15 +185,11 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                   height: 30,
                   thickness: 0.005,
                 ),
-                CustomElevatedButton(
-                  text: 'Done',
-                  onPressed: () {},
-                ),
               ],
             ),
           ),
         ),
       ),
-    );
+      );
   }
 }

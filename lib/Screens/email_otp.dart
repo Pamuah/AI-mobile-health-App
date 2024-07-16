@@ -10,7 +10,7 @@ import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
 import '../models/api.dart';
 import '../widgets/appbar.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class EmailOtpScreen extends StatefulWidget {
   static const routeName = '/otp';

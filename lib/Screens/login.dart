@@ -4,7 +4,7 @@ import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/models/user.dart';
 import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
-import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
+import 'package:ai_mhealth_app/utils/custom_snackbar.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';

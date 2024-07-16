@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../models/api.dart';
 import '../models/email_args.dart';
 import '../providers/user.provider.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 import '../widgets/custom_textfield.dart';
 
 class ResetPasswordScreen extends StatefulWidget {

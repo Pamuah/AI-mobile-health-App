@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
 import 'package:ai_mhealth_app/providers/medication.provider.dart';
 import 'package:ai_mhealth_app/widgets/medication_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:http/http.dart' as http;
 
+import '../models/api.dart';
+import '../models/medication.model.dart';
 import '../providers/user.provider.dart';
 import '../widgets/appbar.dart';
 
@@ -17,19 +22,21 @@ class MedicationReminderScreen extends StatefulWidget {
 }
 
 class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
+  final String serverEndPoint = Api.medsEndPoint;
+
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final String username =
         Provider.of<UserData>(context, listen: false).userName;
     final provider = Provider.of<MedicationData>(context, listen: false);
+    final userProvider = Provider.of<UserData>(context, listen: false);
 
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Medication Reminder",
-
         ),
       ),
       // backgroundColor: color.surface,
@@ -126,31 +133,82 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               height: 8,
               thickness: 0.005,
             ),
-            Expanded(
-              child: Consumer<MedicationData>(
-                builder: (BuildContext context, MedicationData value,
-                    Widget? child) {
-                  return ListView.separated(
-                      itemBuilder: (context, index) {
-                        return MedicationTile(
-                          name: value.getMedicationByIndex(index).name,
-                          isDone: value.getMedicationByIndex(index).completed
-                              ? "Completed"
-                              : "In-Progress",
-                          // isDone:
-                          //     "${value.getMedicationByIndex(index).morining}",
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const Divider(
-                          height: 5,
-                          thickness: 0.001,
-                        );
-                      },
-                      itemCount: value.medicationsLength);
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: Consumer<MedicationData>(
+            //     builder: (BuildContext context, MedicationData value,
+            //         Widget? child) {
+            //       return ListView.separated(
+            //           itemBuilder: (context, index) {
+            // return MedicationTile(
+            //   name: value.getMedicationByIndex(index).name,
+            //   isDone: value.getMedicationByIndex(index).completed
+            //       ? "Completed"
+            //       : "In-Progress",
+            //   // isDone:
+            //   //     "${value.getMedicationByIndex(index).morining}",
+            // );
+            //           },
+            // separatorBuilder: (BuildContext context, int index) {
+            //   return const Divider(
+            //     height: 5,
+            //     thickness: 0.001,
+            //   );
+            // },
+            //           itemCount: value.medicationsLength);
+            //     },
+            //   ),
+            // ),
+            FutureBuilder(
+              future: getMeds(userProvider.userId),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.folder_off_outlined,
+                            size: 150,
+                          ),
+                          Text(
+                            "OOps!! You have not added any medications yet",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18, color: color.onSecondary),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Expanded(
+                      child: ListView.separated(
+                          itemBuilder: (context, index) {
+                            final med = snapshot.data![index];
+                            return MedicationTile(
+                              name: med.name,
+                              isDone: med.completed == 1
+                                  ? "Completed"
+                                  : "In-Progress",
+                              // isDone:
+                              //     "${value.getMedicationByIndex(index).morining}",
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const Divider(
+                              height: 5,
+                              thickness: 0.001,
+                            );
+                          },
+                          itemCount: snapshot.data!.length),
+                    );
+                  }
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )
           ],
         ),
       ),
@@ -167,5 +225,25 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
     );
+  }
+
+  // Get meds
+  Future<List<Medication>> getMeds(userId) async {
+    List<Medication> interimFiles = [];
+    final res = await http.get(
+      Uri.parse("$serverEndPoint/all/$userId"),
+    );
+    if (res.statusCode == 200) {
+      final resData = jsonDecode(res.body);
+      // print(resData);
+      resData.forEach((i) {
+        Medication med = Medication.fromJson(i);
+        interimFiles.add(med);
+      });
+      // print(interimFiles);
+      return interimFiles;
+    } else {
+      throw Exception("Unable to get Files");
+    }
   }
 }

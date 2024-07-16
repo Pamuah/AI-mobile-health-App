@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:ai_mhealth_app/models/notification.dart';
+import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:ai_mhealth_app/widgets/medication_time_card.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
+import '../models/api.dart';
 import '../widgets/appbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class AddMedicationScreen extends StatefulWidget {
   static const routeName = '/add-medication';
@@ -18,12 +25,12 @@ class AddMedicationScreen extends StatefulWidget {
 class _AddMedicationScreenState extends State<AddMedicationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
+  final String serverEndPoint = Api.medsEndPoint;
 
   final TimeOfDay _time = TimeOfDay.now();
   TimeOfDay? morning = TimeOfDay.now();
   TimeOfDay? afternoon = TimeOfDay.now();
   TimeOfDay? evening = TimeOfDay.now();
-
 
   @override
   void dispose() {
@@ -35,6 +42,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    final provider = Provider.of<UserData>(context, listen: false);
 
     return Scaffold(
       bottomNavigationBar: SizedBox(
@@ -103,7 +111,8 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                 //   ),
                 // ),
                 CustomTextField(
-                    hintText: "Medication Duration",
+                    hintText:
+                        "Medication Duration. Enter 0 if you do not know ",
                     controller: durationController),
                 const Divider(
                   height: 45,
@@ -200,7 +209,24 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                 ),
                 CustomElevatedButton(
                   text: 'Done',
-                  onPressed: () {},
+                  onPressed: () async {
+                    final String name = nameController.value.text.trim();
+                    final String duration =
+                        durationController.value.text.trim();
+                    final int userId = provider.userId;
+                    try {
+                      if (await addMed(name, userId, duration)) {
+                        if (context.mounted) {
+                          CustomSnackbar(
+                                  context: context,
+                                  message: "Medication Added Succesfully")
+                              .show();
+                        }
+                      } else {}
+                    } catch (e) {
+                      print(e);
+                    }
+                  },
                 ),
               ],
             ),
@@ -208,5 +234,26 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
         ),
       ),
     );
+  }
+
+  // Register User
+  Future<bool> addMed(name, userId, duration) async {
+    Map<dynamic, dynamic> medication = {
+      'name': name,
+      'id': userId,
+      'duration': int.parse(duration),
+    };
+
+    final res = await http.post(
+      Uri.parse("$serverEndPoint/add"),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(medication),
+    );
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }

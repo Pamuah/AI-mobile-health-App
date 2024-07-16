@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/api.dart';
 import '../models/user_args.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';

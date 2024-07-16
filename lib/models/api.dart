@@ -1,3 +1,5 @@
 class Api {
-  static String userEndpoint = "http://localhost:3000/mhealth-api/users";
+  static String endpoint = 'http://localhost:3000';
+  static String userEndpoint = "$endpoint/mhealth-api/users";
+  static String medsEndPoint = "$endpoint/mhealth-api/meds";
 }

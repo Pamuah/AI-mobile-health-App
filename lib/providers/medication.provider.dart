@@ -1,44 +1,45 @@
 import 'package:ai_mhealth_app/models/medication.model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class MedicationData extends ChangeNotifier {
   List<Medication> medications = [
     Medication(
       name: "Nugel-O",
       duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-      completed: true,
+      // morning: const TimeOfDay(hour: 8, minute: 30),
+      // afternoon: const TimeOfDay(hour: 12, minute: 30),
+      // evening: const TimeOfDay(hour: 22, minute: 30),
+      completed: 1,
     ),
     Medication(
       name: "Panadol",
       duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
+      // morning: const TimeOfDay(hour: 8, minute: 30),
+      // afternoon: const TimeOfDay(hour: 12, minute: 30),
+      // evening: const TimeOfDay(hour: 22, minute: 30),
     ),
     Medication(
       name: "Gebedol",
       duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
+      // morning: const TimeOfDay(hour: 8, minute: 30),
+      // afternoon: const TimeOfDay(hour: 12, minute: 30),
+      // evening: const TimeOfDay(hour: 22, minute: 30),
     ),
     Medication(
       name: "Speman",
       duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-      completed: true,
+      // morning: const TimeOfDay(hour: 8, minute: 30),
+      // afternoon: const TimeOfDay(hour: 12, minute: 30),
+      // evening: const TimeOfDay(hour: 22, minute: 30),
+      completed: 1,
     ),
     Medication(
       name: "Dexatrol",
       duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
+      // morning: const TimeOfDay(hour: 8, minute: 30),
+      // afternoon: const TimeOfDay(hour: 12, minute: 30),
+      // evening: const TimeOfDay(hour: 22, minute: 30),
     )
   ];
 
@@ -51,7 +52,7 @@ class MedicationData extends ChangeNotifier {
     int completed = 0;
 
     for (Medication med in medications) {
-      if (med.completed) {
+      if (med.completed == 1) {
         completed += 1;
       }
     }

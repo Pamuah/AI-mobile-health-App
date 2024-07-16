@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../models/api.dart';
 import '../widgets/appbar.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class ResetEmailOTPScreen extends StatefulWidget {
   static const routeName = "/reset-otp";

@@ -1,6 +1,6 @@
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
-import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
+import 'package:ai_mhealth_app/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

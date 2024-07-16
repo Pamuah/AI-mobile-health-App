@@ -1,5 +1,7 @@
+import 'package:ai_mhealth_app/Screens/add_medication.dart';
+import 'package:ai_mhealth_app/Screens/email_otp.dart';
+import 'package:ai_mhealth_app/Screens/healthreminder.dart';
 import 'package:ai_mhealth_app/Screens/login.dart';
-import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/const/app_routes.dart';
 
 import 'package:ai_mhealth_app/const/theme_data.dart';
@@ -39,12 +41,11 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        theme: themeData(),
-        debugShowCheckedModeBanner: true,
-        routes: AppRoutes().getRoutes(),
-        initialRoute: LoginScreen.routeName,
-        home: const LoginScreen(),
-      ),
+          theme: themeData(),
+          debugShowCheckedModeBanner: true,
+          routes: AppRoutes().getRoutes(),
+          // initialRoute: ForgotPasswordScreen.routeName,
+          home: const MedicationReminderScreen()),
     );
   }
 }

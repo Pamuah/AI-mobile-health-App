@@ -19,6 +19,12 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
 
+  final TimeOfDay _time = TimeOfDay.now();
+  TimeOfDay? morning = TimeOfDay.now();
+  TimeOfDay? afternoon = TimeOfDay.now();
+  TimeOfDay? evening = TimeOfDay.now();
+
+
   @override
   void dispose() {
     nameController.dispose();
@@ -31,33 +37,25 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     final color = Theme.of(context).colorScheme;
 
     return Scaffold(
-
       bottomNavigationBar: SizedBox(
         height: 75,
         width: double.infinity,
         child: ElevatedButton(
+          child: Text(""),
           onPressed: () {
-              NotificationService.showInstantNotification(
-                    "Medication Scheduled", "This shows an instant notifications");
+            NotificationService.showInstantNotification(
+                "Medication Scheduled", "This shows an instant notifications");
             Navigator.of(context).pop();
           },
           style: ElevatedButton.styleFrom(
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.zero)),
-          child: Text(
-            "Done",
-            style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20,
-              color: color.secondary,
-            ),
-          ),
-
+        ),
+      ),
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
           title: "Add Medication",
-
         ),
       ),
       body: SafeArea(
@@ -67,12 +65,8 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 IconButton(
-                  onPressed: () {
-                  
-                  
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.arrow_back_ios_new),
                 ),
                 const Divider(
@@ -131,12 +125,13 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
+                      onTap: () async {
+                        TimeOfDay? interim = await showTimePicker(
+                            context: context, initialTime: _time);
+                        setState(() {
+                          morning = interim;
+                        });
+                        print(morning);
                       },
                       child: MedicationTimeCard(
                         text: "Morning",
@@ -162,11 +157,13 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
+                      onTap: () async {
+                        TimeOfDay? interim = await showTimePicker(
+                            context: context, initialTime: _time);
+                        setState(() {
+                          afternoon = interim;
+                        });
+                        print(afternoon);
                       },
                       child: MedicationTimeCard(
                         text: "Afternoon",
@@ -178,11 +175,13 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {
-                        showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        );
+                      onTap: () async {
+                        TimeOfDay? interim = await showTimePicker(
+                            context: context, initialTime: _time);
+                        setState(() {
+                          evening = interim;
+                        });
+                        print(evening);
                       },
                       child: MedicationTimeCard(
                         text: "Evening",

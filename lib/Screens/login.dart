@@ -28,10 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
 
-  final String serverEndPoint = "http://100.112.18.254:3000/mhealth-api/users";
 
   bool showPassword = false;
-  final String serverEndPoint = Api.userEndpoint;
+  final String userEndPoint = Api.userEndpoint;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 
@@ -234,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // User Login
   Future<bool> logIn() async {
     final res = await http.get(
-      Uri.parse("$serverEndPoint/login/${emailController.value.text}"),
+      Uri.parse("$userEndPoint/login/${emailController.value.text}"),
     );
     if (res.statusCode == 200) {
       final resData = jsonDecode(res.body);

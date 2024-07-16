@@ -31,8 +31,6 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   final String serverEndPoint = "http://100.112.18.254:3000/mhealth-api/users";
 
 
-  final String serverEndPoint = Api.userEndpoint;
-
   @override
   void dispose() {
     firstController.dispose();

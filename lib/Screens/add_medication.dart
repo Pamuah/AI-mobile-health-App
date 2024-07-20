@@ -10,8 +10,8 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 import '../models/api.dart';
-import '../widgets/appbar.dart';
 import '../utils/custom_snackbar.dart';
+import '../widgets/appbar.dart';
 
 class AddMedicationScreen extends StatefulWidget {
   static const routeName = '/add-medication';
@@ -33,6 +33,12 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
   TimeOfDay? evening = TimeOfDay.now();
 
   @override
+  void initState() {
+    NotificationService.init();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     nameController.dispose();
     durationController.dispose();
@@ -45,21 +51,6 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     final provider = Provider.of<UserData>(context, listen: false);
 
     return Scaffold(
-      bottomNavigationBar: SizedBox(
-        height: 75,
-        width: double.infinity,
-        child: ElevatedButton(
-          child: Text(""),
-          onPressed: () {
-            NotificationService.showInstantNotification(
-                "Medication Scheduled", "This shows an instant notifications");
-            Navigator.of(context).pop();
-          },
-          style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero)),
-        ),
-      ),
       appBar: const PreferredSize(
         preferredSize: Size(double.infinity, 70),
         child: MyAppBar(
@@ -73,43 +64,16 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                ),
-                const Divider(
-                  height: 12,
-                  thickness: 0.005,
-                ),
-                Text(
-                  "Add Medication",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 28,
-                    color: color.secondary,
-                  ),
-                ),
-
                 const Divider(
                   height: 15,
                   thickness: 0.005,
                 ),
-                // TextFormField(
-                //   decoration: const InputDecoration(
-                //     label: Text("Medication Name"),
-                //   ),
-                // ),
                 CustomTextField(
                     hintText: "Medication Name", controller: nameController),
                 const Divider(
                   height: 20,
                   thickness: 0.005,
                 ),
-                // TextFormField(
-                //   decoration: const InputDecoration(
-                //     label: Text("Duration"),
-                //   ),
-                // ),
                 CustomTextField(
                     hintText:
                         "Medication Duration. Enter 0 if you do not know ",
@@ -140,7 +104,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                         setState(() {
                           morning = interim;
                         });
-                        print(morning);
+                        // print(morning);
                       },
                       child: MedicationTimeCard(
                         text: "Morning",
@@ -172,7 +136,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                         setState(() {
                           afternoon = interim;
                         });
-                        print(afternoon);
+                        // print(afternoon);
                       },
                       child: MedicationTimeCard(
                         text: "Afternoon",
@@ -190,7 +154,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                         setState(() {
                           evening = interim;
                         });
-                        print(evening);
+                        // print(evening);
                       },
                       child: MedicationTimeCard(
                         text: "Evening",
@@ -221,6 +185,10 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                                   context: context,
                                   message: "Medication Added Succesfully")
                               .show();
+                          NotificationService.showInstantNotification(
+                              "Medication Scheduled",
+                              "This shows an instant notifications");
+                          Navigator.of(context).pop();
                         }
                       } else {}
                     } catch (e) {

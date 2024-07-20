@@ -28,11 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
 
-
   bool showPassword = false;
   final String userEndPoint = Api.userEndpoint;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 
   @override
   void dispose() {
@@ -235,8 +233,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final res = await http.get(
       Uri.parse("$userEndPoint/login/${emailController.value.text}"),
     );
+    print(res.body);
     if (res.statusCode == 200) {
       final resData = jsonDecode(res.body);
+      print(resData);
       final User user = User.fromJson(resData["userData"]);
       if (context.mounted) {
         Provider.of<UserData>(context, listen: false).getUser(user);

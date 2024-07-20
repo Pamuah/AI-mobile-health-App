@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';

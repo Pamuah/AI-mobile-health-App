@@ -17,7 +17,7 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme;
+    // final color = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: const PreferredSize(

@@ -39,7 +39,7 @@ class NotificationService {
         iOS: DarwinNotificationDetails());
 
     await flutterLocalNotificationsPlugin.show(
-      0,
+      1,
       title,
       body,
       platformChannelSpecifics,

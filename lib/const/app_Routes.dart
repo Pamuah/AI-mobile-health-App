@@ -1,3 +1,4 @@
+import 'package:ai_mhealth_app/Screens/Splash.dart';
 import 'package:ai_mhealth_app/Screens/account_info.dart';
 import 'package:ai_mhealth_app/Screens/ai_model.dart';
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
@@ -55,6 +56,7 @@ class AppRoutes {
       SuccessScreen.resetRouteName: (context) => const SuccessScreen(),
       SuccessScreen.changeRouteName: (context) => const SuccessScreen(
           message: "Password was Successfully Changed. Proceed To Home Screen"),
+      SplashScreen.routeName: (context) => const SplashScreen(),
     };
   }
 }

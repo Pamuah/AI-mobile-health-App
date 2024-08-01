@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:get/get.dart';
 import '../widgets/appbar.dart';
+import 'package:intl/intl.dart';
 
 class DoctorScreen extends StatefulWidget {
   static const routeName = '/doctor';
@@ -30,13 +31,17 @@ class _DoctorScreenState extends State<DoctorScreen> {
       print('Message received: $data'); // Added logging
       chatController.chatMessages.add(Message.fromJson(data));
     });
+    socket.on("connect-user", (data) {
+      print(data);
+      chatController.connnectedUser.value = data;
+    });
   }
 
   @override
   void initState() {
     super.initState();
     socket = IO.io(
-        'http://100.112.23.42:3000',
+        'http://100.112.16.95:3000',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()
@@ -66,6 +71,19 @@ class _DoctorScreenState extends State<DoctorScreen> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
+              Expanded(
+                child: Obx(
+                  () => Container(
+                    child: Text(
+                      'Connected Users: ${chatController.connnectedUser}',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: color.secondary),
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 flex: 9,
                 child: Obx(
@@ -150,10 +168,12 @@ class MessageItem extends StatelessWidget {
 
   final bool sentByMe;
   final String message;
+  DateTime get dateTime => DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
+    String formattedTime = DateFormat('hh:mm a').format(dateTime);
     return Align(
       alignment: sentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -178,7 +198,7 @@ class MessageItem extends StatelessWidget {
               width: 8.0,
             ),
             Text(
-              '1:00 am',
+              formattedTime,
               style: TextStyle(
                   color: (sentByMe ? color.onPrimary : Colors.black)
                       .withOpacity(0.7),

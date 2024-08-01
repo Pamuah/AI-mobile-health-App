@@ -50,7 +50,25 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 final List? notifications = snapshot.data;
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (notifications!.isEmpty) {
-                    return Text("Empty");
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/no-alarm.png',
+                            height: 150,
+                            width: 150,
+                          ),
+                          Text(
+                            "No Notifications yet",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 18, color: color.onTertiary),
+                          ),
+                        ],
+                      ),
+                    );
                   }
                   return ListView.separated(
                       itemBuilder: (context, index) {

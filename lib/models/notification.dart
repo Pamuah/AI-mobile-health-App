@@ -2,18 +2,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 class NotificationService {
-  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
 
-  static Future<void> onDidReceiveNotification(NotificationResponse notificationResponse) async {
+  static Future<void> onDidReceiveNotification(
+      NotificationResponse notificationResponse) async {
     print("Notification receive");
   }
 
   static Future<void> init() async {
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings("@mipmap/ic_launcher");
-    const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings();
+    const DarwinInitializationSettings iOSInitializationSettings =
+        DarwinInitializationSettings();
 
-    const InitializationSettings initializationSettings = InitializationSettings(
+    const InitializationSettings initializationSettings =
+        InitializationSettings(
       android: androidInitializationSettings,
       iOS: iOSInitializationSettings,
     );
@@ -24,11 +28,12 @@ class NotificationService {
     );
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
   }
 
- static Future<void> showInstantNotification(String title, String body) async {
+  static Future<void> showInstantNotification(String title, String body) async {
     const NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: AndroidNotificationDetails(
           'instant_notification_channel_id',
@@ -47,7 +52,8 @@ class NotificationService {
     );
   }
 
-  static Future<void> scheduleNotification(int id, String title, String body, DateTime scheduledTime) async {
+  static Future<void> scheduleNotification(
+      int id, String title, String body, DateTime scheduledTime) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -62,17 +68,23 @@ class NotificationService {
           priority: Priority.high,
         ),
       ),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
   }
+
   static Future<List> returnPendingNotifications() async {
     final List<PendingNotificationRequest> pendingNotificationRequests =
         await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     return pendingNotificationRequests;
   }
 
-  Future<void> cancelNotification(int id) async {
+  static Future<void> cancelNotification(int id) async {
     await flutterLocalNotificationsPlugin.cancel(id);
+  }
+
+  static Future<void> cancelAllNotifications() async {
+    await flutterLocalNotificationsPlugin.cancelAll();
   }
 }

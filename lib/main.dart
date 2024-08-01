@@ -15,6 +15,7 @@ import 'models/history.dart';
 import 'models/notification.dart';
 import 'models/notification_model.dart';
 import 'providers/medication.provider.dart';
+import 'services/hive_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,9 +25,15 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(HistoryAdapter());
   Hive.registerAdapter(NotifyAdapter());
-  // To open the user hive box
-  // await Hive.openBox<History>('histories');
-  // await Hive.openBox<Notify>('notifications');
+  // clear local databases
+  void clearLocalStorage() async {
+    HistoryService _historyService = HistoryService();
+    await NotificationService.cancelAllNotifications();
+    await _historyService.deleteAllHistory();
+  }
+
+  // Clear local databases
+  // clearLocalStorage();
 
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
@@ -54,7 +61,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        theme: themeData(),
+        theme: themeData(context),
         debugShowCheckedModeBanner: true,
         routes: AppRoutes().getRoutes(),
         // initialRoute: DoctorScreen.routeName,

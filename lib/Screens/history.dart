@@ -53,7 +53,22 @@ class _PatientHistoryScreenState extends State<PatientHistoryScreen> {
                 final List? histories = snapshot.data;
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (histories!.isEmpty) {
-                    return Text("Empty");
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/no-file.png',
+                          height: 150,
+                          width: 150,
+                        ),
+                        Text(
+                          "OOps!! You do not have any previously registered history yet.",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 18, color: color.onTertiary),
+                        ),
+                      ],
+                    );
                   }
                   // return Text("${histories.last.date}");
                   return ValueListenableBuilder(

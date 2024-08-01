@@ -31,6 +31,12 @@ class HistoryService {
     var box = await _box;
     await box.deleteAt(index);
   }
+
+  // delete all
+  Future<void> deleteAllHistory() async {
+    var box = await _box;
+    await box.clear();
+  }
 }
 
 class NotifyService {

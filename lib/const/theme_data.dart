@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-ThemeData themeData() {
+ThemeData themeData(context) {
   return ThemeData(
+    useMaterial3: true,
+    textTheme: GoogleFonts.playTextTheme(
+      Theme.of(context).textTheme,
+    ),
     scaffoldBackgroundColor: Colors.white,
     colorScheme: ThemeData().colorScheme.copyWith(
         primary: const Color.fromARGB(255, 156, 208, 171),

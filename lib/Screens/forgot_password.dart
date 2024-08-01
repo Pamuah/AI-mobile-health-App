@@ -37,10 +37,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size(double.infinity, 70),
+          appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, 70),
             child: MyAppBar(
               title: "Forgot Password",
+              onPressed: () {},
             ),
           ),
           body: SafeArea(

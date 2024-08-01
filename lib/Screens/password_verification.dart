@@ -37,10 +37,11 @@ class _PasswordVerificationScreenState
     currentPassword = provider.userPassword;
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 50),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 50),
         child: MyAppBar(
           title: "Verify Password",
+          onPressed: () {},
         ),
       ),
       body: SafeArea(

@@ -66,4 +66,13 @@ class NotificationService {
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
   }
+  static Future<List> returnPendingNotifications() async {
+    final List<PendingNotificationRequest> pendingNotificationRequests =
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotificationRequests;
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
+  }
 }

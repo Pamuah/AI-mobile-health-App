@@ -1,30 +1,30 @@
 // import 'package:flutter/material.dart';
 
 class Medication {
+  final int id;
   final String name;
-  final int duration;
-  // final TimeOfDay? morning;
-  // final TimeOfDay? afternoon;
-  // final TimeOfDay? evening;
-  final int completed;
+  final int? morningId;
+  final int? afternoonId;
+  final int? eveningId;
+  int completed;
 
   Medication({
+    required this.id,
     required this.name,
-    required this.duration,
-    // required this.morning,
-    // required this.afternoon,
-    // required this.evening,
+    required this.morningId,
+    required this.afternoonId,
+    required this.eveningId,
     this.completed = 0,
   });
 
   factory Medication.fromJson(Map<String, dynamic> json) {
     return Medication(
+      id: json["id"],
       name: json['name'],
-      duration: json['duration'],
       completed: json['completed'],
-      // morning: json['morning'],
-      // afternoon: json['afternoon'],
-      // evening: json['evening'],
+      morningId: json['morning_id'],
+      afternoonId: json['afternoon_id'],
+      eveningId: json['evening_id'],
     );
   }
 }

@@ -4,43 +4,32 @@ import 'package:flutter/material.dart';
 
 class MedicationData extends ChangeNotifier {
   List<Medication> medications = [
-    Medication(
-      name: "Nugel-O",
-      duration: 5,
-      // morning: const TimeOfDay(hour: 8, minute: 30),
-      // afternoon: const TimeOfDay(hour: 12, minute: 30),
-      // evening: const TimeOfDay(hour: 22, minute: 30),
-      completed: 1,
-    ),
-    Medication(
-      name: "Panadol",
-      duration: 5,
-      // morning: const TimeOfDay(hour: 8, minute: 30),
-      // afternoon: const TimeOfDay(hour: 12, minute: 30),
-      // evening: const TimeOfDay(hour: 22, minute: 30),
-    ),
-    Medication(
-      name: "Gebedol",
-      duration: 5,
-      // morning: const TimeOfDay(hour: 8, minute: 30),
-      // afternoon: const TimeOfDay(hour: 12, minute: 30),
-      // evening: const TimeOfDay(hour: 22, minute: 30),
-    ),
-    Medication(
-      name: "Speman",
-      duration: 5,
-      // morning: const TimeOfDay(hour: 8, minute: 30),
-      // afternoon: const TimeOfDay(hour: 12, minute: 30),
-      // evening: const TimeOfDay(hour: 22, minute: 30),
-      completed: 1,
-    ),
-    Medication(
-      name: "Dexatrol",
-      duration: 5,
-      // morning: const TimeOfDay(hour: 8, minute: 30),
-      // afternoon: const TimeOfDay(hour: 12, minute: 30),
-      // evening: const TimeOfDay(hour: 22, minute: 30),
-    )
+    // Medication(
+    //   id: 1,
+    //   name: "Nugel-O",
+    //   completed: 1,
+    // ),
+    // Medication(
+    //   id: 10,
+    //   name: "Panadol",
+    //   // duration: 5,
+    // ),
+    // Medication(
+    //   id: 100,
+    //   name: "Gebedol",
+    //   // duration: 5,
+    // ),
+    // Medication(
+    //   id: 1000,
+    //   name: "Speman",
+    //   // duration: 5,
+    //   completed: 1,
+    // ),
+    // Medication(
+    //   id: 10000,
+    //   name: "Dexatrol",
+    //   // duration: 5,
+    // )
   ];
 
   // Getters

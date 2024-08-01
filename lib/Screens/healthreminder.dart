@@ -2,14 +2,19 @@ import 'dart:convert';
 
 import 'package:ai_mhealth_app/Screens/add_medication.dart';
 import 'package:ai_mhealth_app/providers/medication.provider.dart';
+import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
 import 'package:ai_mhealth_app/widgets/medication_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/api.dart';
+import '../models/history.dart';
 import '../models/medication.model.dart';
+import '../models/notification.dart';
 import '../providers/user.provider.dart';
+import '../services/hive_service.dart';
 import '../widgets/appbar.dart';
 
 class MedicationReminderScreen extends StatefulWidget {
@@ -23,6 +28,7 @@ class MedicationReminderScreen extends StatefulWidget {
 
 class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
   final String serverEndPoint = Api.medsEndPoint;
+  HistoryService _historyService = HistoryService();
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,11 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     final userProvider = Provider.of<UserData>(context, listen: false);
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 70),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 70),
         child: MyAppBar(
           title: "Medication Reminder",
+          onPressed: () {},
         ),
       ),
       // backgroundColor: color.surface,
@@ -53,8 +60,8 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
             RichText(
               text: TextSpan(
                   text: "Hello,",
-                  style: const TextStyle(
-                    color: Color(0xFF27272A),
+                  style: TextStyle(
+                    color: color.secondary,
                     fontSize: 28,
                     fontWeight: FontWeight.w700,
                     height: 0,
@@ -62,9 +69,9 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   children: [
                     TextSpan(
                       text: "\n$username",
-                      style: const TextStyle(
+                      style: TextStyle(
                         letterSpacing: 5,
-                        color: Color(0xFF27272A),
+                        color: color.secondary,
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
                         height: 0,
@@ -99,14 +106,14 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                         color: color.secondary,
                       ),
                     ),
-                    Text(
-                      "\n${provider.completedMedications()} of ${provider.medicationsLength} completed",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        color: color.secondary,
-                      ),
-                    ),
+                    // Text(
+                    //   "\n${provider.completedMedications()} of ${provider.medicationsLength} completed",
+                    //   style: TextStyle(
+                    //     fontWeight: FontWeight.w400,
+                    //     fontSize: 12,
+                    //     color: color.secondary,
+                    //   ),
+                    // ),
                   ],
                 ),
                 const Spacer(),
@@ -133,52 +140,26 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
               height: 8,
               thickness: 0.005,
             ),
-            // Expanded(
-            //   child: Consumer<MedicationData>(
-            //     builder: (BuildContext context, MedicationData value,
-            //         Widget? child) {
-            //       return ListView.separated(
-            //           itemBuilder: (context, index) {
-            // return MedicationTile(
-            //   name: value.getMedicationByIndex(index).name,
-            //   isDone: value.getMedicationByIndex(index).completed
-            //       ? "Completed"
-            //       : "In-Progress",
-            //   // isDone:
-            //   //     "${value.getMedicationByIndex(index).morining}",
-            // );
-            //           },
-            // separatorBuilder: (BuildContext context, int index) {
-            //   return const Divider(
-            //     height: 5,
-            //     thickness: 0.001,
-            //   );
-            // },
-            //           itemCount: value.medicationsLength);
-            //     },
-            //   ),
-            // ),
             FutureBuilder(
               future: getMeds(userProvider.userId),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isEmpty) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.folder_off_outlined,
-                            size: 150,
-                          ),
-                          Text(
-                            "OOps!! You have not added any medications yet",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 18, color: color.onSecondary),
-                          ),
-                        ],
-                      ),
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/no-file.png',
+                          height: 150,
+                          width: 150,
+                        ),
+                        Text(
+                          "OOps!! You have not added any medications yet",
+                          textAlign: TextAlign.center,
+                          style:
+                              TextStyle(fontSize: 18, color: color.onTertiary),
+                        ),
+                      ],
                     );
                   } else {
                     return Expanded(
@@ -190,8 +171,11 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                               isDone: med.completed == 1
                                   ? "Completed"
                                   : "In-Progress",
-                              // isDone:
-                              //     "${value.getMedicationByIndex(index).morining}",
+                              onCompleted: () {
+                                setState(() {
+                                  med.completed = 1;
+                                });
+                              },
                             );
                           },
                           separatorBuilder: (BuildContext context, int index) {
@@ -208,7 +192,7 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                   child: CircularProgressIndicator(),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
@@ -245,5 +229,16 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     } else {
       throw Exception("Unable to get Files");
     }
+  }
+
+  // Save History Data
+  void saveHistory() async {
+    var history = History(
+        diagnosis: "prediction",
+        symptoms: "symptoms",
+        generatedText: "genText",
+        date: DateTime.now().toString());
+    print(history.date);
+    await _historyService.addHistory(history);
   }
 }

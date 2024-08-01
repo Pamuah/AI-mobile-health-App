@@ -1,8 +1,8 @@
-import 'package:ai_mhealth_app/Screens/add_medication.dart';
-import 'package:ai_mhealth_app/Screens/email_otp.dart';
-import 'package:ai_mhealth_app/Screens/healthreminder.dart';
-import 'package:ai_mhealth_app/Screens/login.dart';
+import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/const/app_routes.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 import 'package:ai_mhealth_app/const/theme_data.dart';
 import 'package:ai_mhealth_app/providers/user.provider.dart';
@@ -11,10 +11,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import 'models/history.dart';
+import 'models/notification.dart';
+import 'models/notification_model.dart';
 import 'providers/medication.provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  tz.initializeTimeZones();
+  NotificationService.init();
+  // To intialise the hive database
+  await Hive.initFlutter();
+  Hive.registerAdapter(HistoryAdapter());
+  Hive.registerAdapter(NotifyAdapter());
+  // To open the user hive box
+  // await Hive.openBox<History>('histories');
+  // await Hive.openBox<Notify>('notifications');
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then((_) {
     runApp(
@@ -41,11 +54,12 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          theme: themeData(),
-          debugShowCheckedModeBanner: true,
-          routes: AppRoutes().getRoutes(),
-          // initialRoute: ForgotPasswordScreen.routeName,
-          home: const MedicationReminderScreen()),
+        theme: themeData(),
+        debugShowCheckedModeBanner: true,
+        routes: AppRoutes().getRoutes(),
+        // initialRoute: DoctorScreen.routeName,
+        home: const HomeScreen(),
+      ),
     );
   }
 }

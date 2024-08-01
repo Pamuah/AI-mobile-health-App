@@ -55,10 +55,11 @@ class _DoctorScreenState extends State<DoctorScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 70),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 70),
         child: MyAppBar(
           title: "Consultation",
+          onPressed: () {},
         ),
       ),
       body: SafeArea(

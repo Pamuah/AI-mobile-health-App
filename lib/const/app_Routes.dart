@@ -8,6 +8,7 @@ import 'package:ai_mhealth_app/Screens/home.dart';
 import 'package:ai_mhealth_app/Screens/notifications.dart';
 import 'package:ai_mhealth_app/Screens/password_verification.dart';
 import 'package:ai_mhealth_app/Screens/patient_records.dart';
+import 'package:ai_mhealth_app/Screens/prediction.dart';
 import 'package:ai_mhealth_app/Screens/privacy.dart';
 import 'package:ai_mhealth_app/Screens/reset_email_otp.dart';
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
@@ -55,6 +56,7 @@ class AppRoutes {
       SuccessScreen.resetRouteName: (context) => const SuccessScreen(),
       SuccessScreen.changeRouteName: (context) => const SuccessScreen(
           message: "Password was Successfully Changed. Proceed To Home Screen"),
+      PredictionScreen.routeName: (ctx) => const PredictionScreen()
     };
   }
 }

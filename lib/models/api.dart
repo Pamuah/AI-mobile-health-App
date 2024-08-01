@@ -1,4 +1,5 @@
 class Api {
+
   // static String endpoint = 'http://localhost:3000';
   // static String model = "http://127.0.0.1:5000";
 
@@ -10,4 +11,5 @@ class Api {
   static String medsEndPoint = "$endpoint/mhealth-api/meds";
   static String modelEndPoint = model;
   static String aiSecret = 'AIzaSyCDmqFfUwb8fuWydwdE9CVBBiEBKQYADwY';
+
 }

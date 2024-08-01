@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 
 import '../models/api.dart';
 import '../widgets/appbar.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class ResetEmailOTPScreen extends StatefulWidget {
   static const routeName = "/reset-otp";
@@ -60,10 +60,11 @@ class _ResetEmailOTPScreenState extends State<ResetEmailOTPScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size(double.infinity, 70),
+          appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, 70),
             child: MyAppBar(
               title: "Reset Password",
+              onPressed: () {},
             ),
           ),
           body: SafeArea(

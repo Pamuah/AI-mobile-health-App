@@ -1,45 +1,35 @@
 import 'package:ai_mhealth_app/models/medication.model.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class MedicationData extends ChangeNotifier {
   List<Medication> medications = [
-    Medication(
-      name: "Nugel-O",
-      duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-      completed: true,
-    ),
-    Medication(
-      name: "Panadol",
-      duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-    ),
-    Medication(
-      name: "Gebedol",
-      duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-    ),
-    Medication(
-      name: "Speman",
-      duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-      completed: true,
-    ),
-    Medication(
-      name: "Dexatrol",
-      duration: 5,
-      morining: DateTime.utc(09, 10),
-      afternoon: DateTime.utc(15, 00),
-      evening: DateTime.utc(20, 00),
-    )
+    // Medication(
+    //   id: 1,
+    //   name: "Nugel-O",
+    //   completed: 1,
+    // ),
+    // Medication(
+    //   id: 10,
+    //   name: "Panadol",
+    //   // duration: 5,
+    // ),
+    // Medication(
+    //   id: 100,
+    //   name: "Gebedol",
+    //   // duration: 5,
+    // ),
+    // Medication(
+    //   id: 1000,
+    //   name: "Speman",
+    //   // duration: 5,
+    //   completed: 1,
+    // ),
+    // Medication(
+    //   id: 10000,
+    //   name: "Dexatrol",
+    //   // duration: 5,
+    // )
   ];
 
   // Getters
@@ -51,7 +41,7 @@ class MedicationData extends ChangeNotifier {
     int completed = 0;
 
     for (Medication med in medications) {
-      if (med.completed) {
+      if (med.completed == 1) {
         completed += 1;
       }
     }

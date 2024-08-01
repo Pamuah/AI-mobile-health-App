@@ -39,7 +39,7 @@ class NotificationService {
         iOS: DarwinNotificationDetails());
 
     await flutterLocalNotificationsPlugin.show(
-      0,
+      1,
       title,
       body,
       platformChannelSpecifics,
@@ -65,5 +65,14 @@ class NotificationService {
       uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.dateAndTime,
     );
+  }
+  static Future<List> returnPendingNotifications() async {
+    final List<PendingNotificationRequest> pendingNotificationRequests =
+        await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    return pendingNotificationRequests;
+  }
+
+  Future<void> cancelNotification(int id) async {
+    await flutterLocalNotificationsPlugin.cancel(id);
   }
 }

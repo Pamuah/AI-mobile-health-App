@@ -8,7 +8,7 @@ class NotificationTile extends StatefulWidget {
       required this.leadingIcon});
   final String title;
   final String subTitle;
-  final Icon leadingIcon;
+  final Widget leadingIcon;
 
   @override
   State<NotificationTile> createState() => _NotificationTileState();

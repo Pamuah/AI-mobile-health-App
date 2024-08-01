@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget {
-  const MyAppBar({super.key, required this.title});
+  const MyAppBar({super.key, required this.title, this.onPressed});
   final String title;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class MyAppBar extends StatelessWidget {
         ),
         child: IconButton(
           onPressed: () {
+            onPressed!() ??
             Navigator.of(context).pop();
           },
           icon: Icon(

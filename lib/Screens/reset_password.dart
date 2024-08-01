@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:ai_mhealth_app/Screens/login.dart';
 import 'package:ai_mhealth_app/Screens/success.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../models/api.dart';
 import '../models/email_args.dart';
 import '../providers/user.provider.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 import '../widgets/custom_textfield.dart';
 
 class ResetPasswordScreen extends StatefulWidget {

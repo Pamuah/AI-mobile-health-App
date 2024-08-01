@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../models/api.dart';
 import '../models/user_args.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class SignUpScreen extends StatefulWidget {
   static const routeName = '/signup';
@@ -23,8 +23,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   bool isLoading = false;
-
-
   bool showPassword = false;
   final String serverEndPoint = Api.userEndpoint;
 

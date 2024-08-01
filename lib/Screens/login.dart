@@ -4,7 +4,7 @@ import 'package:ai_mhealth_app/Screens/sign_up.dart';
 import 'package:ai_mhealth_app/models/user.dart';
 import 'package:ai_mhealth_app/providers/user.provider.dart';
 import 'package:ai_mhealth_app/widgets/Google_Facebook_BTN.dart';
-import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
+import 'package:ai_mhealth_app/utils/custom_snackbar.dart';
 import 'package:ai_mhealth_app/widgets/custom_textfield.dart';
 import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +28,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
 
-
-
   bool showPassword = false;
-  final String serverEndPoint = Api.userEndpoint;
+  final String userEndPoint = Api.userEndpoint;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 
   @override
   void dispose() {
@@ -234,10 +231,12 @@ class _LoginScreenState extends State<LoginScreen> {
   // User Login
   Future<bool> logIn() async {
     final res = await http.get(
-      Uri.parse("$serverEndPoint/login/${emailController.value.text}"),
+      Uri.parse("$userEndPoint/login/${emailController.value.text}"),
     );
+    print(res.body);
     if (res.statusCode == 200) {
       final resData = jsonDecode(res.body);
+      print(resData);
       final User user = User.fromJson(resData["userData"]);
       if (context.mounted) {
         Provider.of<UserData>(context, listen: false).getUser(user);

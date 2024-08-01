@@ -10,7 +10,7 @@ import 'package:blurry_modal_progress_hud/blurry_modal_progress_hud.dart';
 
 import '../models/api.dart';
 import '../widgets/appbar.dart';
-import '../widgets/custom_snackbar.dart';
+import '../utils/custom_snackbar.dart';
 
 class EmailOtpScreen extends StatefulWidget {
   static const routeName = '/otp';
@@ -27,10 +27,6 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
   TextEditingController thirdController = TextEditingController();
   TextEditingController fourthController = TextEditingController();
   bool isLoading = false;
-
-
-
-
   final String serverEndPoint = Api.userEndpoint;
 
   @override
@@ -58,10 +54,11 @@ class _EmailOtpScreenState extends State<EmailOtpScreen> {
         inAsyncCall: isLoading,
         dismissible: false,
         child: Scaffold(
-          appBar: const PreferredSize(
-            preferredSize: Size(double.infinity, 70),
+          appBar: PreferredSize(
+            preferredSize: const Size(double.infinity, 70),
             child: MyAppBar(
               title: "Account Verification",
+              onPressed: () {},
             ),
           ),
           body: SafeArea(

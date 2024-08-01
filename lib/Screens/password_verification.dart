@@ -1,6 +1,6 @@
 import 'package:ai_mhealth_app/Screens/reset_password.dart';
 import 'package:ai_mhealth_app/widgets/custom_elevated_button.dart';
-import 'package:ai_mhealth_app/widgets/custom_snackbar.dart';
+import 'package:ai_mhealth_app/utils/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,10 +37,11 @@ class _PasswordVerificationScreenState
     currentPassword = provider.userPassword;
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 50),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 50),
         child: MyAppBar(
           title: "Verify Password",
+          onPressed: () {},
         ),
       ),
       body: SafeArea(

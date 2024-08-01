@@ -60,10 +60,11 @@ class _DoctorScreenState extends State<DoctorScreen> {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 70),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 70),
         child: MyAppBar(
           title: "Consultation",
+          onPressed: () {},
         ),
       ),
       body: SafeArea(
@@ -161,10 +162,10 @@ class _DoctorScreenState extends State<DoctorScreen> {
 
 class MessageItem extends StatelessWidget {
   const MessageItem({
-    Key? key,
+    super.key,
     required this.sentByMe,
     required this.message,
-  }) : super(key: key);
+  });
 
   final bool sentByMe;
   final String message;
@@ -177,8 +178,8 @@ class MessageItem extends StatelessWidget {
     return Align(
       alignment: sentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
-        margin: EdgeInsets.symmetric(vertical: 3.0, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10),
+        margin: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(7.0),
           color: sentByMe ? color.primary : Colors.grey,
@@ -194,7 +195,7 @@ class MessageItem extends StatelessWidget {
                   color: sentByMe ? color.onPrimary : Colors.black,
                   fontSize: 18),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
             Text(

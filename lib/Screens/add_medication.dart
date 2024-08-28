@@ -213,7 +213,7 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
                           CustomDialog.showPopUp(
                               context,
                               "WARNING",
-                              "You must choose one of the timings to proceed",
+                              "You must choose at least one of the timings to proceed",
                               "OK",
                               null, () {
                             Navigator.pop(context);

@@ -72,7 +72,7 @@ class MyApp extends StatelessWidget {
         routes: AppRoutes().getRoutes(),
 
         // initialRoute: LoginScreen.routeName,
-        home: const SplashScreen(),
+        home: const HomeScreen(),
 
       ),
     );

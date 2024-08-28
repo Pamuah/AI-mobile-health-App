@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/user.provider.dart';
+import '../utils/dialog.dart';
 import 'account_info.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -41,11 +42,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
-        elevation: 0,
-        backgroundColor: color.primary,
-          leading: const SizedBox()
-      ),
+          toolbarHeight: 70,
+          elevation: 0,
+          backgroundColor: color.primary,
+          leading: const SizedBox()),
       body: Column(
         children: [
           Container(
@@ -103,7 +103,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Navigator.pushNamed(
                                 context, PrivacyScreen.routeName);
                           case 4:
-                            Navigator.pushNamed(context, LoginScreen.routeName);
+                            CustomDialog.showPopUp(
+                                context,
+                                "LOGOUT?",
+                                "Are you sure you want to logout?",
+                                "YES",
+                                "CANCEL", () {
+                              Navigator.pushNamed(
+                                  context, LoginScreen.routeName);
+                            }, () {
+                              Navigator.pop(context);
+                            });
+
                           default:
                         }
                       },

@@ -53,7 +53,7 @@ class CustomDialog {
                       },
                       child: Text(
                         secondButtonText,
-                        style: TextStyle(color: color.onSecondary),
+                        style: TextStyle(color: color.onTertiary),
                       ),
                     )
                   : const SizedBox()

@@ -29,6 +29,8 @@ class MedicationReminderScreen extends StatefulWidget {
 class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
   final String serverEndPoint = Api.medsEndPoint;
   HistoryService _historyService = HistoryService();
+  int totalMeds = 0;
+  int completedMeds = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -114,6 +116,14 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                     //     color: color.secondary,
                     //   ),
                     // ),
+                    Text(
+                      "\n$completedMeds of $totalMeds completed",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: color.secondary,
+                      ),
+                    ),
                   ],
                 ),
                 const Spacer(),
@@ -166,15 +176,30 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
                       child: ListView.separated(
                           itemBuilder: (context, index) {
                             final med = snapshot.data![index];
+                            // if (med.completed == 1) {
+                            //   setState(() {
+                            //     completedMeds += 1;
+                            //   });
+                            // }
+                            // if (index == snapshot.data!.length) {
+                            //   setState(() {
+                            //     // completedMeds += 1;
+                            //     totalMeds = snapshot.data!.length;
+                            //   });
+                            // }
                             return MedicationTile(
                               name: med.name,
-                              isDone: med.completed == 1
+                              isDone: med.completed,
+                              subtitle: med.completed == 1
                                   ? "Completed"
                                   : "In-Progress",
-                              onCompleted: () {
-                                setState(() {
-                                  med.completed = 1;
-                                });
+                              onCompleted: () async {
+                                if (await markasDone(
+                                    med.id, userProvider.userId)) {
+                                  print("done");
+                                  // cancelScheduledMeds(med.morningId,
+                                  //     med.afternoonId, med.eveningId);
+                                }
                               },
                             );
                           },
@@ -231,6 +256,28 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
     }
   }
 
+  // Mark Medication as Done
+  Future<bool> markasDone(medId, userId) async {
+    try {
+      final res = await http.put(
+        Uri.parse("$serverEndPoint/med-completed/$medId"),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(
+          {"userId": userId},
+        ),
+      );
+      if (res.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      debugPrint(e as String?);
+      return false;
+    }
+  }
+
   // Save History Data
   void saveHistory() async {
     var history = History(
@@ -240,5 +287,18 @@ class _MedicationReminderScreenState extends State<MedicationReminderScreen> {
         date: DateTime.now().toString());
     print(history.date);
     await _historyService.addHistory(history);
+  }
+
+  // Cancel scheduled meds
+  void cancelScheduledMeds(int? morning, int? afternoon, int? evening) {
+    if (morning != null) {
+      NotificationService.cancelNotification(morning);
+    }
+    if (afternoon != null) {
+      NotificationService.cancelNotification(afternoon);
+    }
+    if (evening != null) {
+      NotificationService.cancelNotification(evening);
+    }
   }
 }

@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool showPassword = false;
   final String userEndPoint = Api.userEndpoint;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
+  String message = 'message';
   @override
   void dispose() {
     emailController.dispose();
@@ -115,32 +115,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (!_formKey.currentState!.validate()) {
                                   return;
                                 } else {
+                                  // print(message);
                                   try {
                                     setState(() {
                                       isLoading = true;
                                     });
                                     if (await logIn()) {
                                       if (context.mounted) {
-                                        CustomSnackbar(
-                                                message: "Login Successful",
-                                                context: context)
-                                            .show();
+                                        // CustomSnackbar(
+                                        //         message: "Login Successful",
+                                        //         context: context)
+                                        //     .show();
                                         Navigator.pushNamed(context, '/home');
                                       }
-                                    } else {
-                                      if (context.mounted) {
-                                        CustomSnackbar(
-                                                message:
-                                                    "Wrong Password. Try Again!!",
-                                                context: context)
-                                            .show();
-                                      }
+                                    }
+                                    print(message);
+                                    if (context.mounted) {
+                                      CustomSnackbar(
+                                              message: message,
+                                              context: context)
+                                          .show();
                                     }
                                   } catch (e) {
                                     if (context.mounted) {
                                       CustomSnackbar(
-                                              message:
-                                                  "Enter a registered Email.",
+                                              message: e.toString(),
                                               context: context)
                                           .show();
                                     }
@@ -230,23 +229,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // User Login
   Future<bool> logIn() async {
-    final res = await http.get(
-      Uri.parse("$userEndPoint/login/${emailController.value.text}"),
-    );
-    print(res.body);
-    if (res.statusCode == 200) {
+    final String email = emailController.value.text;
+    final String password = passwordController.value.text;
+    try {
+      final res = await http.get(
+        Uri.parse("$userEndPoint/login/$email/$password"),
+      );
+      // print(res.body);
       final resData = jsonDecode(res.body);
-      print(resData);
-      final User user = User.fromJson(resData["userData"]);
-      if (context.mounted) {
-        Provider.of<UserData>(context, listen: false).getUser(user);
-      }
-      if (user.password == passwordController.value.text) {
+      if (res.statusCode == 200) {
+        // print(resData);
+        final User user = User.fromJson(resData[0]);
+        if (context.mounted) {
+          Provider.of<UserData>(context, listen: false).getUser(user);
+        }
+        message = "login successful";
         return true;
       }
-      return false;
-    } else {
-      throw Exception("Failed to login.");
+      print(resData['message']);
+      message = resData["message"];
+    } catch (e) {
+      // message = e.toString();
+      rethrow;
     }
+    return false;
   }
 }

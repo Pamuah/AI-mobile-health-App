@@ -34,10 +34,13 @@ class AccountInfoScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size(double.infinity, 70),
+      appBar: PreferredSize(
+        preferredSize: const Size(double.infinity, 70),
         child: MyAppBar(
           title: "Account Info",
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
       body: SafeArea(

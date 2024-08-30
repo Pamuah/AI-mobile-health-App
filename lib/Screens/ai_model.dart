@@ -309,9 +309,13 @@ class _AiModelScreenState extends State<AiModelScreen> {
                         hintText: 'Enter your Symptoms here',
                         hintStyle: TextStyle(
                             fontSize: 24,
-                            color: color.tertiary,
+                            color: color.onPrimary,
                             fontWeight: FontWeight.w500),
                       ),
+                      style: TextStyle(
+                          fontSize: 24,
+                          color: color.onPrimary,
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                 ),

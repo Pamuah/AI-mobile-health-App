@@ -15,9 +15,7 @@ class PrivacyScreen extends StatelessWidget {
         preferredSize: const Size(double.infinity, 70),
         child: MyAppBar(
           title: "Privacy",
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () {},
         ),
       ),
       body: SafeArea(

@@ -3,6 +3,7 @@ import 'package:ai_mhealth_app/models/message.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:get/get.dart';
+import '../models/api.dart';
 import '../widgets/appbar.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +19,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
   TextEditingController msgInputController = TextEditingController();
   late IO.Socket socket;
   ChatController chatController = ChatController();
+  final String serverEndPoint = Api.endpoint;
 
   void sendMessage(String text) {
     var messageJson = {'message': text, 'sentByMe': socket.id};
@@ -41,7 +43,7 @@ class _DoctorScreenState extends State<DoctorScreen> {
   void initState() {
     super.initState();
     socket = IO.io(
-        'http://100.112.16.95:3000',
+        serverEndPoint,
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()

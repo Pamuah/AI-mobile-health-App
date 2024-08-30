@@ -267,6 +267,11 @@ class _PredictionScreenState extends State<PredictionScreen> {
                           future: generate(prediction),
                           builder: (context, snapshot) {
                             genText = snapshot.data;
+                            try {
+                              saveHistory(prediction, input, genText);
+                            } catch (e) {
+                              print(e);
+                            }
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return Text(
@@ -290,12 +295,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
                         child: CustomElevatedButton(
                           text: 'Back',
                           onPressed: () {
-                            try {
-                              saveHistory(prediction, input, genText);
-                              Navigator.pop(context);
-                            } catch (e) {
-                              print(e);
-                            }
+                            Navigator.pop(context);
                           },
                         ),
                       ),

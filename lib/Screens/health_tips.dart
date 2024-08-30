@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
+import '../models/api.dart';
+
 class HealthEduScreen extends StatefulWidget {
   static const routeName = '/health-education';
   const HealthEduScreen({super.key});
@@ -16,6 +18,7 @@ class _HealthEduScreenState extends State<HealthEduScreen> {
   String tip = "Please wait a moment.";
   int currentID = 0;
   Timer? _timer;
+  final String serverEndPoint = Api.userEndpoint;
 
   @override
   void initState() {
@@ -31,7 +34,7 @@ class _HealthEduScreenState extends State<HealthEduScreen> {
   }
 
   void _startTimer() {
-    _timer = Timer.periodic(Duration(hours:24), (timer) {
+    _timer = Timer.periodic(Duration(hours: 24), (timer) {
       setState(() {
         currentID++;
       });
@@ -41,7 +44,7 @@ class _HealthEduScreenState extends State<HealthEduScreen> {
 
   Future<void> fetchTip(int id) async {
     try {
-      final response = await http.get(Uri.parse('http://172.20.10.4:3000/mhealth-api/users/tips'));
+      final response = await http.get(Uri.parse('$serverEndPoint/tips'));
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
@@ -82,7 +85,10 @@ class _HealthEduScreenState extends State<HealthEduScreen> {
         backgroundColor: Colors.transparent,
         title: Text(
           "Tip of the Day",
-          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: color.secondary),
+          style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: color.secondary),
         ),
         centerTitle: true,
         toolbarHeight: 70,

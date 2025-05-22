@@ -1,16 +1,62 @@
-# ai_mhealth_app
+# 🧠 AI Mobile Health App
 
-A new Flutter project.
+An intelligent mobile healthcare assistant built with Flutter and AI to help users get fast symptom analysis, medical insights, and professional support — all from one mobile app.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## ✨ Features
 
-A few resources to get you started if this is your first Flutter project:
+- 🤖 **AI Symptom Checker**  
+  Input your symptoms and receive an instant, AI-generated preliminary diagnosis powered by a Convolutional Neural Network (CNN) model.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- 🧬 **Generative AI Disease Explanation**  
+  The app uses generative AI to explain your potential diagnosis in a simple, user-friendly way.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 💬 **In-App Medical Chat**  
+  Chat in real-time with certified medical professionals for expert medical advice.
+
+- 📅 **Daily Health Tips**  
+  Receive daily health advice and preventive care suggestions tailored to your needs.
+
+- 💊 **Medication Reminders**  
+  Never miss a dose again. Set and manage custom medication reminders right from the app.
+
+---
+
+## 🛠️ Tech Stack
+
+### 📱 Frontend
+- **[Flutter](https://flutter.dev/)** — Cross-platform UI framework
+- **[Provider](https://pub.dev/packages/provider)** — State management
+
+### 🌐 Backend
+- **Node.js** — RESTful API server
+- **MySQL** — Relational database for data storage
+
+### 🧠 AI/ML
+- **Model**: Convolutional Neural Network (CNN)
+- **Dataset**: Curated medical dataset for disease prediction
+- **Integration**: Model connected to the backend for real-time inference
+
+## 📸 Screenshots
+
+### 🔍 Registration
+![Registration](screenshots/Screenshot_1722358322.png)
+
+### 💬 AI Diagnosis
+![AI Diagnosis](screenshots/Screenshot_1725023561.png)
+
+### ⏰ Medication Reminder
+![Medication Reminder](screenshots/Screenshot_1725023881.png)
+
+### Homepage
+![Homepage](screenshots/Screenshot_1725023554.png)
+
+### ⏰ Medication Reminder
+![Daily health tips](screenshots/Screenshot_1725023900.png)
+
+### ⏰ Medication Reminder
+![Splash Screen](screenshots/Screenshot_1725024040.png)
+
+
+
